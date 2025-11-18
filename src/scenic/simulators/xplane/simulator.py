@@ -15,6 +15,7 @@ import math
 import os
 import traceback
 import warnings
+from time import sleep
 
 import scenic.core.errors as errors
 from scenic.core.simulators import Simulation, SimulationCreationError, Simulator
