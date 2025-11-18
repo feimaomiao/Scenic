@@ -23,7 +23,7 @@ from scenic.core.simulators import SimulationCreationError
 from scenic.syntax.veneer import verbosePrint
 
 try:
-    from xpc import XPlaneConnect
+    from xpc import XPlaneConnect # type: ignore
 except ImportError as e:
     raise RuntimeError('the X-Plane interface requires XPlaneConnect') from e
 
