@@ -70,7 +70,6 @@ class XPlaneSimulation(Simulation):
     self.client.sendDATA(data)
 
     # Set control surfaces and throttle of the player aircraft using sendCTRL
-    print("Setting controls")
     ctrl = [0.0, 0.0, 0.0, 0.8]
     self.client.sendCTRL(ctrl)
 
