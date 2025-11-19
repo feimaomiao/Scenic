@@ -23,18 +23,18 @@ except ImportError as exception:
 
 class XPlaneSimulator(Simulator):
 
-  def __init__(self):
+  def __init__(self, runway_data):
     super().__init__()
 
-    self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test',
-                                            timestep=0)
+    self.simulation = self.createSimulation(None, runway_data, maxSteps=0,
+                                            name='xplane test', timestep=0)
     self.simulation.setup()
     self.simulation.executeActions([])
     self.simulation.getProperties(None, None)
     return
 
-  def createSimulation(self, scene, **kwargs):
-    return XPlaneSimulation(scene, **kwargs)
+  def createSimulation(self, scene, runway_data, **kwargs):
+    return XPlaneSimulation(scene, runway_data, **kwargs)
 
   def destroy(self):
     super().destroy()
@@ -42,10 +42,12 @@ class XPlaneSimulator(Simulator):
 
 class XPlaneSimulation(Simulation):
 
-  def __init__(self, scene, **kwargs):
+  def __init__(self, scene, runway_data, **kwargs):
     # super().__init__(scene, **kwargs)
 
+    self.runway_data = runway_data
     self.client = XPlaneConnect()
+
     try:
       self.client.getDREF("sim/test/test_float")
     except:
@@ -55,15 +57,20 @@ class XPlaneSimulation(Simulation):
 
   def setup(self):
     # super().setup()
+    print(self.runway_data)
 
     # Set position of the player aircraft
     #       Lat     Lon         Alt   Pitch Roll Yaw Gear
-    posi = [37.524, -122.06899, 2500, 0,    0,   0,  1]
+    posi = [self.runway_data.start_lat,
+            self.runway_data.start_lon,
+            0, 0, 0, 0, 1]
     self.client.sendPOSI(posi)
     
     # Set position of a non-player aircraft
     #       Lat       Lon         Alt   Pitch Roll Yaw Gear
-    posi = [37.52465, -122.06899, 2500, 0,    20,   0,  1]
+    posi = [self.runway_data.end_lat,
+            self.runway_data.end_lon,
+            0, 0, 20, 0, 1]
     self.client.sendPOSI(posi, 1)
 
     # Set angle of attack, velocity, and orientation using the DATA command
@@ -122,7 +129,6 @@ if __name__ == "__main__":
 
   # Parse runway configuration
   runway = load_yaml(args.runway)
-  print(runway)
   rads = runway['radians']
   runway_heading = runway['heading']
   if not rads:
@@ -134,4 +140,4 @@ if __name__ == "__main__":
       end_lat=runway['end_lat'], end_lon=runway['end_lon']
   )
 
-  # XPlaneSimulator()
+  XPlaneSimulator(runway_data=runway_data)
