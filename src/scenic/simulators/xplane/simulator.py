@@ -60,9 +60,9 @@ class XPlaneSimulation(Simulation):
 
     # Set position of the player aircraft
     #       Lat     Lon         Alt   Pitch Roll Yaw Gear
-    posi = [self.runway_data.start_lat,
-            self.runway_data.start_lon,
-            0, 0, 0, 0, 1]
+    posi = [47.80460447599387, 12.996827345547088,
+            429.2803463173907, 0.6177443265914917, 
+            -0.6730020046234131, 156.9822235107422, 1.0]
     self.client.sendPOSI(posi)
     
     # Set position of a non-player aircraft
