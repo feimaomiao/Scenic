@@ -24,9 +24,9 @@ from scenic.core.simulators import SimulationCreationError
 from scenic.syntax.veneer import verbosePrint
 
 try:
-    from xpc import XPlaneConnect # type: ignore
-except ImportError as e:
-    raise RuntimeError('the X-Plane interface requires XPlaneConnect') from e
+  from xpc import XPlaneConnect # type: ignore
+except ImportError as exception:
+  raise RuntimeError('The X-Plane interface requires XPlaneConnect.') from exception
 
 class TemplateSimulator(Simulator):
 
@@ -39,7 +39,7 @@ class TemplateSimulator(Simulator):
 
   def destroy(self):
     super().destroy()
-
+    return
 
 class TemplateSimulation(Simulation):
 
