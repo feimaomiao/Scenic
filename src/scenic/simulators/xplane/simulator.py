@@ -1,15 +1,3 @@
-"""Simulator interface"""
-
-"""
-Introduction to Simulator Interface
-
-This file illustrates the basics on how to 
-implement the Simultor and Simulation class for your
-Scenic interface. The docstrings in each function
-and class gives a brief description on what you should
-write in each function and gives examples where needed.
-
-"""
 import logging
 import math
 import os
@@ -28,22 +16,26 @@ try:
 except ImportError as exception:
   raise RuntimeError('The X-Plane interface requires XPlaneConnect.') from exception
 
-class TemplateSimulator(Simulator):
+class XPlaneSimulator(Simulator):
 
   def __init__(self):
     super().__init__()
 
-    self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
+    self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test',
+                                            timestep=0)
+    self.simulation.setup()
+    self.simulation.executeActions([])
+    self.simulation.getProperties()
     return
 
   def createSimulation(self, scene, **kwargs):
-    return TemplateSimulation(scene, **kwargs)
+    return XPlaneSimulation(scene, **kwargs)
 
   def destroy(self):
     super().destroy()
     return
 
-class TemplateSimulation(Simulation):
+class XPlaneSimulation(Simulation):
 
   def __init__(self, scene, **kwargs):
     # super().__init__(scene, **kwargs)
@@ -67,7 +59,7 @@ class TemplateSimulation(Simulation):
     # Set position of a non-player aircraft
     #       Lat       Lon         Alt   Pitch Roll Yaw Gear
     posi = [37.52465, -122.06899, 2500, 0,    20,   0,  1]
-    self.clientclient.sendPOSI(posi, 1)
+    self.client.sendPOSI(posi, 1)
 
     # Set angle of attack, velocity, and orientation using the DATA command
     data = [\
@@ -80,7 +72,7 @@ class TemplateSimulation(Simulation):
     # Set control surfaces and throttle of the player aircraft using sendCTRL
     print("Setting controls")
     ctrl = [0.0, 0.0, 0.0, 0.8]
-    self.clientclient.sendCTRL(ctrl)
+    self.client.sendCTRL(ctrl)
 
     return
 
@@ -115,4 +107,4 @@ class TemplateSimulation(Simulation):
     return
 
 if __name__ == "__main__":
-  TemplateSimulator()
+  XPlaneSimulator()
