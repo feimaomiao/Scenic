@@ -32,6 +32,8 @@ class TemplateSimulator(Simulator):
 
   def __init__(self):
     super().__init__()
+
+    self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
     return
 
   def createSimulation(self, scene, **kwargs):
@@ -44,7 +46,7 @@ class TemplateSimulator(Simulator):
 class TemplateSimulation(Simulation):
 
   def __init__(self, scene, **kwargs):
-    super().__init__(scene, **kwargs)
+    # super().__init__(scene, **kwargs)
 
     self.client = XPlaneConnect()
     try:
@@ -55,7 +57,7 @@ class TemplateSimulation(Simulation):
     return
 
   def setup(self):
-    super().setup() # Calls createObjectInSimulator for each object
+    # super().setup()
 
     # Set position of the player aircraft
     #       Lat     Lon         Alt   Pitch Roll Yaw Gear
@@ -113,4 +115,4 @@ class TemplateSimulation(Simulation):
     return
 
 if __name__ == "__main__":
-  pass
+  TemplateSimulator()
