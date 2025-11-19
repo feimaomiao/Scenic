@@ -79,10 +79,10 @@ class XPlaneSimulation(Simulation):
     return
 
   def executeActions(self, allActions):
-    client.pauseSim(True)
+    self.client.pauseSim(True)
     sleep(2)
 
-    client.pauseSim(False)
+    self.client.pauseSim(False)
 
     # Stow landing gear using a dataref
     gear_dref = "sim/cockpit/switches/gear_handle_status"
