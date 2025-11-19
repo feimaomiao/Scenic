@@ -64,13 +64,6 @@ class XPlaneSimulation(Simulation):
             429.2803463173907, 0.6177443265914917, 
             -0.6730020046234131, 156.9822235107422, 1.0]
     self.client.sendPOSI(posi)
-    
-    # Set position of a non-player aircraft
-    #       Lat       Lon         Alt   Pitch Roll Yaw Gear
-    posi = [self.runway_data.end_lat,
-            self.runway_data.end_lon,
-            0, 0, 20, 0, 1]
-    self.client.sendPOSI(posi, 1)
 
     # Set angle of attack, velocity, and orientation using the DATA command
     data = [\
