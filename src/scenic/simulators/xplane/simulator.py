@@ -16,6 +16,8 @@ from scenic.core.vectors import Vector
 from scenic.core.simulators import SimulationCreationError
 from scenic.syntax.veneer import verbosePrint
 
+from scenic import scenarioFromFile
+
 try:
   from xpc import XPlaneConnect
 except ImportError as exception:
@@ -23,14 +25,18 @@ except ImportError as exception:
 
 class XPlaneSimulator(Simulator):
 
-  def __init__(self, runway_data):
+  def __init__(self, runway_data, scenic_file):
     super().__init__()
+    
+    # self.scenario = scenarioFromFile(scenic_file)
+    # print(self.scenario)
 
-    self.simulation = self.createSimulation(None, runway_data, maxSteps=0,
-                                            name='xplane test', timestep=0)
+    self.simulation = self.createSimulation(None, runway_data,
+                                            maxSteps=0, name='xplane test', timestep=0)
     self.simulation.setup()
     self.simulation.executeActions([])
     self.simulation.getProperties(None, None)
+
     return
 
   def createSimulation(self, scene, runway_data, **kwargs):
@@ -117,6 +123,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('-r', '--runway', help='runway configuration file',
                       default='runway.yaml')
+  parser.add_argument('-f', '--scenic-file', help='scenic file')
   args = parser.parse_args()
 
   # Parse runway configuration
@@ -132,4 +139,4 @@ if __name__ == "__main__":
       end_lat=runway['end_lat'], end_lon=runway['end_lon']
   )
 
-  XPlaneSimulator(runway_data=runway_data)
+  XPlaneSimulator(runway_data=runway_data, scenic_file=args.scenic_file)
