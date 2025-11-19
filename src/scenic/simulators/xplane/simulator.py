@@ -1,8 +1,13 @@
+import argparse
 import logging
 import math
 import os
 import traceback
 import warnings
+
+import yaml
+from dotmap import DotMap
+
 from time import sleep
 
 import scenic.core.errors as errors
@@ -104,5 +109,29 @@ class XPlaneSimulation(Simulation):
   def destroy(self):
     return
 
+def load_yaml(filename):
+    with open(filename, 'r') as stream:
+        options = yaml.safe_load(stream)
+    return options
+
 if __name__ == "__main__":
-  XPlaneSimulator()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-r', '--runway', help='runway configuration file',
+                      default='runway.yaml')
+  args = parser.parse_args()
+
+  # Parse runway configuration
+  runway = load_yaml(args.runway)
+  print(runway)
+  rads = runway['radians']
+  runway_heading = runway['heading']
+  if not rads:
+      runway_heading = math.radians(runway_heading)
+  runway_data = DotMap(
+      heading=runway_heading, elevations=runway['elevations'],
+      origin_x=runway['origin_X'], origin_z=runway['origin_Z'],
+      start_lat=runway['start_lat'], start_lon=runway['start_lon'],
+      end_lat=runway['end_lat'], end_lon=runway['end_lon']
+  )
+
+  # XPlaneSimulator()
