@@ -57,7 +57,6 @@ class XPlaneSimulation(Simulation):
 
   def setup(self):
     # super().setup()
-    print(self.runway_data)
 
     # Set position of the player aircraft
     #       Lat     Lon         Alt   Pitch Roll Yaw Gear
