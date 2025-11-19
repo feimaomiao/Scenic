@@ -86,7 +86,7 @@ class XPlaneSimulation(Simulation):
 
     # Stow landing gear using a dataref
     gear_dref = "sim/cockpit/switches/gear_handle_status"
-    client.sendDREF(gear_dref, 0)
+    self.client.sendDREF(gear_dref, 0)
     return
 
   def step(self):
@@ -95,7 +95,7 @@ class XPlaneSimulation(Simulation):
 
   def getProperties(self, obj, properties):
     # Make sure gear was stowed successfully
-    gear_status = client.getDREF(gear_dref)
+    gear_status = self.client.getDREF(gear_dref)
     if gear_status[0] == 0:
         print("Gear stowed")
     else:
