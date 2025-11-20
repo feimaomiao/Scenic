@@ -8,5 +8,5 @@ all: simulator
 simulator:
 	python3 simulator.py --runway $(RUNWAY_PATH) --scenic-file $(SCENIC_FILE)
 
-playground:
-	python3 playground.py
+location:
+	python3 location.py
