@@ -12,12 +12,28 @@ COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
 SLEEP_INTERVAL = 2
 
+getCurrentPos = lambda : client.getDREFs(COORDS_DREFS)
+
+def setOffset(dref, offset):
+  print("Back to center of runway.")
+  client.sendDREF(dref, client.getDREF(dref)[0] + offset)
+  return
+
+def resetPos(center):
+  client.sendDREFs(COORDS_DREFS, [center[0][0], center[1][0], center[2][0]])
+
 if __name__ == "__main__":
   client = XPlaneConnect()
   client.getDREF("sim/test/test_float")
 
+  CENTER = getCurrentPos()
   print("Center of the runway:")
-  coords = client.getDREFs(COORDS_DREFS)
-  print(coords)
+  print(CENTER)
+  sleep(SLEEP_INTERVAL)
 
-  CENTER = coords
+  setOffset(X_DREF, 5)
+  print("Top of the runway:")
+  print(getCurrentPos())
+  sleep(SLEEP_INTERVAL)
+
+  resetPos(CENTER)
