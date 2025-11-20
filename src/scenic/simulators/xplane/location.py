@@ -72,7 +72,7 @@ if __name__ == "__main__":
   # resetPosition(client, CENTER)
 
   print("Top of runway:")
-  newPosition = setOffset(client, 0.001, 0, 0)
+  newPosition = setOffset(client, 0, 0.005, 0)
   printPosition(newPosition)
   sleep(SLEEP_INTERVAL)
 
