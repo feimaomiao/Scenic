@@ -25,11 +25,15 @@ def printPosition(position):
   print()
   return
 
-def setPosition(client, field, newValue):
-  position = list(client.getPOSI())
-  position[field] = newValue
-  client.sendPOSI(position)
-  return
+def setOffset(client, lat, lon, alt):
+  newPosition = list(client.getPOSI())
+  
+  newPosition[LAT] += lat
+  newPosition[LON] += lon
+  newPosition[ALT] += alt
+
+  client.sendPOSI(newPosition)
+  return newPosition
 
 def resetPosition(client, center):
   print("Back to center.")
@@ -48,21 +52,28 @@ if __name__ == "__main__":
 
   CENTER = position
 
-  print("Left corner of runway:")
-  setPosition(client, LON, position[LON] + 0.0004)
-  printPosition(position)
-  sleep(SLEEP_INTERVAL)
+  # print("Left corner of runway:")
+  # setPosition(client, LON, position[LON] + 0.0004)
+  # printPosition(position)
+  # sleep(SLEEP_INTERVAL)
 
-  print("Left side of runway:")
-  setPosition(client, LON, position[LON] + 0.0004)
-  printPosition(position)
-  sleep(SLEEP_INTERVAL)
+  # print("Left side of runway:")
+  # setPosition(client, LON, position[LON] + 0.0004)
+  # printPosition(position)
+  # sleep(SLEEP_INTERVAL)
 
-  resetPosition(client, CENTER)
+  # resetPosition(client, CENTER)
 
-  print("Right side of runway:")
-  setPosition(client, LON, position[LON] - 0.0004)
-  printPosition(position)
+  # print("Right side of runway:")
+  # setPosition(client, LON, position[LON] - 0.0004)
+  # printPosition(position)
+  # sleep(SLEEP_INTERVAL)
+
+  # resetPosition(client, CENTER)
+
+  print("Top of runway:")
+  newPosition = setOffset(client, 0.001, 0, 0)
+  printPosition(newPosition)
   sleep(SLEEP_INTERVAL)
 
   resetPosition(client, CENTER)
