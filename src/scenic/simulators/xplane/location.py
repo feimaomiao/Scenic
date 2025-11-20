@@ -1,3 +1,5 @@
+from time import sleep
+
 from xpc import XPlaneConnect
 
 LAT = 0
@@ -26,10 +28,10 @@ def setPosition(client, field, newValue):
 
 if __name__ == "__main__":
   client = XPlaneConnect()
+  client.getDREF("sim/test/test_float")
 
-  print(f"Position at the center of the runway:")
   position = client.getPOSI()
-  printPosition(position)
+  printPosition(position)   
 
-  setPosition(client, LAT, position[LAT] + 100)
+  setPosition(client, LAT, position[LAT] + 0.1)
   printPosition(position)
