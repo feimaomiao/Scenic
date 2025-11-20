@@ -8,7 +8,7 @@ from xpc import XPlaneConnect
 X_DREF = "sim/flightmodel/position/local_x"
 Y_DREF = "sim/flightmodel/position/local_y"
 Z_DREF = "sim/flightmodel/position/local_z"
-COORDS_DREFS = [X_DREF, Y_DEF, Z_DREF]
+COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
 SLEEP_INTERVAL = 2
 
