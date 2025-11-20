@@ -12,7 +12,8 @@ if __name__ == "__main__":
       position = client.getPOSI()
       control = client.getCTRL()
 
-      print(position)
+      print(f"Position: {position}")
+      print(F"Control: {control}")
 
     except:
       raise RuntimeError("Failed to establish connection to XPlane.")
