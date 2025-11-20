@@ -32,7 +32,9 @@ def setPosition(client, field, newValue):
   return
 
 def resetPosition(client, center):
+  print("Back to center.")
   client.sendPOSI(center)
+  sleep(SLEEP_INTERVAL)
   return
 
 if __name__ == "__main__":
@@ -51,10 +53,16 @@ if __name__ == "__main__":
   printPosition(position)
   sleep(SLEEP_INTERVAL)
 
-  print("Left corner of runway:")
+  print("Left side of runway:")
   setPosition(client, LON, position[LON] + 0.0004)
   printPosition(position)
   sleep(SLEEP_INTERVAL)
 
-  print("Back to center")
-  client.sendPOSI(CENTER)
+  resetPosition(client, CENTER)
+
+  print("Right side of runway:")
+  setPosition(client, LON, position[LON] - 0.0004)
+  printPosition(position)
+  sleep(SLEEP_INTERVAL)
+
+  resetPosition(client, CENTER)
