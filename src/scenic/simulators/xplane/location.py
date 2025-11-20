@@ -31,7 +31,8 @@ if __name__ == "__main__":
   print(CENTER)
   sleep(SLEEP_INTERVAL)
 
-  setOffset(X_DREF, 5)
+  setOffset(X_DREF, 10)
+  setOffset(Z_DREF, 20)
   print("Top of the runway:")
   print(getCurrentPos())
   sleep(SLEEP_INTERVAL)
