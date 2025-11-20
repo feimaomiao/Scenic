@@ -1,3 +1,6 @@
+""" This script gets the corners of the runway for the LOWS R 15 airport runway assumping
+    that the player is flying the Beechcraft Baron 58 aircraft.
+"""
 from time import sleep
 
 from xpc import XPlaneConnect
@@ -9,7 +12,9 @@ PITCH = 3
 ROLL = 4
 YAW = 5
 GEAR = 6
-FIELDS = [i for i in range(LAT, GEAR + 1)]
+FIELDS = ["Lat", "Lon", "Alt", "Pitch", "Roll", "Yaw", "Gear"]
+
+SLEEP_INTERVAL = 2
 
 def printPosition(position):
   assert(len(position) == len(FIELDS))
@@ -26,12 +31,30 @@ def setPosition(client, field, newValue):
   client.sendPOSI(position)
   return
 
+def resetPosition(client, center):
+  client.sendPOSI(center)
+  return
+
 if __name__ == "__main__":
   client = XPlaneConnect()
   client.getDREF("sim/test/test_float")
 
+  print("Center of the runway:")
   position = client.getPOSI()
-  printPosition(position)   
-
-  setPosition(client, LAT, position[LAT] + 0.1)
   printPosition(position)
+  sleep(SLEEP_INTERVAL)
+
+  CENTER = position
+
+  print("Left corner of runway:")
+  setPosition(client, LON, position[LON] + 0.0004)
+  printPosition(position)
+  sleep(SLEEP_INTERVAL)
+
+  print("Left corner of runway:")
+  setPosition(client, LON, position[LON] + 0.0004)
+  printPosition(position)
+  sleep(SLEEP_INTERVAL)
+
+  print("Back to center")
+  client.sendPOSI(CENTER)
