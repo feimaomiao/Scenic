@@ -8,3 +8,6 @@ class Plane:
   """ Bounding box representing the Beechcraft Baron 58. 
   """
   position: (Range(-225, 851), Range(337, 350), Range(-33897, -31355))
+  width: 10
+  height: 10
+  length: 10
