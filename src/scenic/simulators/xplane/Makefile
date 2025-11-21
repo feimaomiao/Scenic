@@ -12,4 +12,4 @@ location:
 	python3 ./scripts/location.py
 
 example:
-	scenic ./example/example.scenic
+	scenic ./example/example.scenic --axes
