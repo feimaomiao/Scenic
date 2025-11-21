@@ -1,3 +1,5 @@
+import math
+
 """Scenic world model for the X-Plane simulator.
 
    In its current state, the model only supports the Beechcraft Baron 58 airplane
@@ -26,8 +28,6 @@ def points_to_normalized_rectangle(points):
         - normalized_width: Width normalized to 10
         - normalized_height: Height as a ratio of width (scaled proportionally)
     """
-    import math
-
     # Extract x and z coordinates (ignoring y)
     coords = [(p[0], p[2]) for p in points]
 
