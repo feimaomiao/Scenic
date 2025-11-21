@@ -25,22 +25,21 @@ except ImportError as exception:
 
 class XPlaneSimulator(Simulator):
 
-  def __init__(self, runway_data, scenic_file):
+  def __init__(self, scenic_file):
     super().__init__()
     
     # self.scenario = scenarioFromFile(scenic_file)
     # print(self.scenario)
 
-    self.simulation = self.createSimulation(None, runway_data,
-                                            maxSteps=0, name='xplane test', timestep=0)
+    self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
     self.simulation.setup()
     self.simulation.executeActions([])
     self.simulation.getProperties(None, None)
 
     return
 
-  def createSimulation(self, scene, runway_data, **kwargs):
-    return XPlaneSimulation(scene, runway_data, **kwargs)
+  def createSimulation(self, scene, **kwargs):
+    return XPlaneSimulation(scene, **kwargs)
 
   def destroy(self):
     super().destroy()
@@ -48,10 +47,9 @@ class XPlaneSimulator(Simulator):
 
 class XPlaneSimulation(Simulation):
 
-  def __init__(self, scene, runway_data, **kwargs):
+  def __init__(self, scene, **kwargs):
     # super().__init__(scene, **kwargs)
 
-    self.runway_data = runway_data
     self.client = XPlaneConnect()
 
     try:
@@ -121,22 +119,7 @@ def load_yaml(filename):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument('-r', '--runway', help='runway configuration file',
-                      default='runway.yaml')
   parser.add_argument('-f', '--scenic-file', help='scenic file')
   args = parser.parse_args()
 
-  # Parse runway configuration
-  runway = load_yaml(args.runway)
-  rads = runway['radians']
-  runway_heading = runway['heading']
-  if not rads:
-      runway_heading = math.radians(runway_heading)
-  runway_data = DotMap(
-      heading=runway_heading, elevations=runway['elevations'],
-      origin_x=runway['origin_X'], origin_z=runway['origin_Z'],
-      start_lat=runway['start_lat'], start_lon=runway['start_lon'],
-      end_lat=runway['end_lat'], end_lon=runway['end_lon']
-  )
-
-  XPlaneSimulator(runway_data=runway_data, scenic_file=args.scenic_file)
+  XPlaneSimulator(scenic_file=args.scenic_file)

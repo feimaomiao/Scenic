@@ -6,7 +6,7 @@ PHONY: simulator playground
 all: simulator
 
 simulator:
-	python3 simulator.py --runway $(RUNWAY_PATH) --scenic-file $(SCENIC_FILE)
+	python3 simulator.py --scenic-file $(SCENIC_FILE)
 
 location:
 	python3 location.py
