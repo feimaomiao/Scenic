@@ -10,34 +10,36 @@ Y_DREF = "sim/flightmodel/position/local_y"
 Z_DREF = "sim/flightmodel/position/local_z"
 COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
-SLEEP_INTERVAL = 2
+SLEEP_TIME_SECONDS = 2
 
-getCurrentPos = lambda : client.getDREFs(COORDS_DREFS)
+class XPlaneWrapper():
 
-def setOffset(dref, offset):
-  print("Back to center of runway.")
-  client.sendDREF(dref, client.getDREF(dref)[0] + offset)
-  return
+  def __init__(self):
+    self.client = XPlaneConnect()
+    return
 
-def resetPos(center):
-  client.sendDREFs(COORDS_DREFS, [center[0][0], center[1][0], center[2][0]])
+  def getPosition(self):
+    position = self.client.getDREFs(COORDS_DREFS)
+    return (position[0], position[1], position[2])
+
+  def setOffset(self, dref, offset):
+    self.client.sendDREF(dref, self.client.getDREF(dref)[0] + offset)
+    return
+
+  def setLocation(self, location):
+    self.client.sendDREFs(COORDS_DREFS, [location[0], location[1], location[2]])
+    return
+
 
 if __name__ == "__main__":
-  client = XPlaneConnect()
-  client.getDREF("sim/test/test_float")
+  client = XPlaneWrapper()
 
-  print("Current Location:")
-  print(getCurrentPos())
+  locations = [
+    (851.549560546875, 350.7986755371094, -31377.404296875),  # top left corner
+    (808.9561157226562, 351.1387634277344, -31355.494140625),  # top right corner
+    client.getPosition()
+  ]
 
-  # CENTER = getCurrentPos()
-  # print("Center of the runway:")
-  # print(CENTER)
-  # sleep(SLEEP_INTERVAL)
-
-  # setOffset(X_DREF, -150)
-  # setOffset(Z_DREF, 300)
-  # print("Top of the runway:")
-  # print(getCurrentPos())
-  # sleep(SLEEP_INTERVAL)
-
-  # resetPos(CENTER)
+  for location in locations:
+    client.setLocation(location)
+    sleep(SLEEP_TIME_SECONDS)
