@@ -26,15 +26,18 @@ if __name__ == "__main__":
   client = XPlaneConnect()
   client.getDREF("sim/test/test_float")
 
-  CENTER = getCurrentPos()
-  print("Center of the runway:")
-  print(CENTER)
-  sleep(SLEEP_INTERVAL)
-
-  setOffset(X_DREF, -150)
-  setOffset(Z_DREF, 300)
-  print("Top of the runway:")
+  print("Current Location:")
   print(getCurrentPos())
-  sleep(SLEEP_INTERVAL)
 
-  resetPos(CENTER)
+  # CENTER = getCurrentPos()
+  # print("Center of the runway:")
+  # print(CENTER)
+  # sleep(SLEEP_INTERVAL)
+
+  # setOffset(X_DREF, -150)
+  # setOffset(Z_DREF, 300)
+  # print("Top of the runway:")
+  # print(getCurrentPos())
+  # sleep(SLEEP_INTERVAL)
+
+  # resetPos(CENTER)
