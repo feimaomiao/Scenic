@@ -49,21 +49,24 @@ def points_to_normalized_rectangle(points):
 
 
     # Normalize width to 10 and scale height proportionally
-    normalized_width = 30
+    normalized_width = 10
     normalized_height = round((length / width) * normalized_width)
-    return ((0, 0, 0), 0, normalized_width//2, normalized_height//2)
+    return ((0, 0, 0), 0, normalized_width, normalized_height, length, width)
 
-
+vec, orientation, norm_width, norm_height, real_length, real_width = points_to_normalized_rectangle(POINTS)
 workspace = Workspace(
-  RectangularRegion(*points_to_normalized_rectangle(POINTS), 'runway')
+  RectangularRegion(vec,orientation,norm_width, norm_height, 'runway')
 )
 Runway = workspace
 
+ratio = real_width / norm_width
 class Plane:
   """ Bounding box representing the Beechcraft Baron 58. 
   """
-  # position: (Range(-266, 851), Range(337, 350), Range(-33897, -31355))
-  width: 10
-  height: 10
-  length: 10
+  # plane width = 11.53m
+  # plane height = 2.97m
+  # plane length = 9.09m
+  width: 11.53 / ratio
+  height: 2.97 / ratio
+  length: 9.09 / ratio
   shape: BoxShape()
