@@ -1,6 +1,4 @@
 # Load X-Plane world model
 from scenic.simulators.xplane.model import *
 
-ego = new Plane
-
-#change chen
+ego = new Plane on Runway 
