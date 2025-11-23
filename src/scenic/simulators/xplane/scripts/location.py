@@ -19,7 +19,7 @@ class XPlaneWrapper():
 
   def getPosition(self):
     position = self.client.getDREFs(self.COORDS_DREFS)
-    return tuple([int(coord[0]) for coord in position])
+    return tuple([coord[0] for coord in position])
 
   def setOffset(self, dref, offset):
     self.client.sendDREF(dref, self.client.getDREF(dref)[0] + offset)
