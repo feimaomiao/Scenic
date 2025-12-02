@@ -5,6 +5,9 @@ SCENIC_FILE="./example/example.scenic"
 
 all: simulator
 
+simulate:
+	scenic ./example/example.scenic --axes --simulate
+
 simulator:
 	python3 simulator.py --scenic-file $(SCENIC_FILE)
 
