@@ -1,5 +1,5 @@
 RUNWAY_PATH="/Users/simeon/Desktop/Repositories/Scenic/examples/xplane/runway.yaml"
-SCENIC_FILE="/Users/simeon/Desktop/Repositories/Scenic/examples/xplane/example.scenic"
+SCENIC_FILE="./example/example.scenic"
 
 .PHONY: simulator location example
 
@@ -13,3 +13,6 @@ location:
 
 example:
 	scenic ./example/example.scenic --axes
+
+location2:
+	python3 location2.py --scenic-file $(SCENIC_FILE)
