@@ -80,7 +80,18 @@ class XPlaneSimulation(Simulation):
     return
 
   def getProperties(self, obj, properties):
-    return properties
+    props = {}
+
+    props["yaw"] = 0
+    props["velocity"] = Vector(0, 0, 0)
+    props["position"] = Vector(0, 0, 0)
+    props["speed"] = 0
+    props["roll"] = 0
+    props["angularSpeed"] = 0
+    props["pitch"] = 0
+    props["angularVelocity"] = Vector(0, 0, 0)
+
+    return props
 
   def destroy(self):
     return
