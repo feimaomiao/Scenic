@@ -1,6 +1,14 @@
 """Scenic world model for the X-Plane simulator.
 """
-from common import *
+import math
+
+POINTS = [
+  (850, 350.7986755371094, -31372),                            # top left corner
+  (808.9561157226562, 351.1387634277344, -31355.494140625),    # top right corner
+  (-225.74005126953125, 337.68798828125, -33897.8203125),      # bottom left corner
+  (-266.25006103515625, 337.9598083496094, -33882.296875),     # bottom right corner
+  (291.85, 343.5, -32627.15)                                   # center of runway
+]
 
 def points_to_normalized_rectangle(points):
   """Convert four corner points to a normalized rectangle.

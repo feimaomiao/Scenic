@@ -2,8 +2,6 @@
    In its current state, the model only supports the Beechcraft Baron 58 airplane
    and the LOWS R 15 airport.
 """
-import math
-
 RUNWAY_CENTER = (-237, 338, -33869)
 RUNWAY_LENGTH = (851 - -266) + 1
 RUNWAY_WIDTH =  (351 - 337) + 1

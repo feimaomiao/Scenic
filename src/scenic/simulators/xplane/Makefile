@@ -18,4 +18,4 @@ example:
 	scenic ./example/example.scenic --axes
 
 random_location:
-	python3 ./random_location.py --scenic-file $(SCENIC_FILE)
+	python3 ./scripts/random_location.py --scenic-file $(SCENIC_FILE)
