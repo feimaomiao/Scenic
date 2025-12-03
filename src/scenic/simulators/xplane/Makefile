@@ -29,5 +29,9 @@ merge:
 	git pull
 	git merge main
 	git push
+	git checkout xplane-runway-tracking
+	git pull
+	git merge main
+	git push
 	git checkout simeon
 	git pull
