@@ -24,14 +24,6 @@ class XPlaneSimulator(Simulator):
 
   def __init__(self):
     super().__init__()
-
-    # self.scenario = scenarioFromFile(scenic_file)
-    # self.simulate(self.scenario)
-
-    # self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
-    # self.simulation.setup()
-    # self.simulation.executeActions([])
-    # self.simulation.getProperties(None, None)
     return
 
   def createSimulation(self, scene, **kwargs):
@@ -44,9 +36,12 @@ class XPlaneSimulator(Simulator):
 class XPlaneSimulation(Simulation):
 
   def __init__(self, scene, **kwargs):
-    # super().__init__(scene, **kwargs)
-
+    self.agents = []
     self.wrapper = XPlaneWrapper()
+    self.client = self.wrapper.client
+
+    super().__init__(scene, **kwargs)
+
     self.scene = scene
     self.setup()
     return
@@ -73,33 +68,18 @@ class XPlaneSimulation(Simulation):
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
     self.wrapper.setLocation(location_random_3D)
-    time.sleep(SLEEP_TIME_SECONDS)
     return
 
   def createObjectInSimulator(self, obj):
     return
 
   def executeActions(self, allActions):
-    self.client.pauseSim(True)
-    sleep(2)
-
-    self.client.pauseSim(False)
-
-    # Stow landing gear using a dataref
-    self.client.sendDREF("sim/cockpit/switches/gear_handle_status", 0)
     return
 
   def step(self):
-    time.sleep(4)
     return
 
   def getProperties(self, obj, properties):
-    # Make sure gear was stowed successfully
-    gear_status = self.client.getDREF("sim/cockpit/switches/gear_handle_status")
-    if gear_status[0] == 0:
-        print("Gear stowed")
-    else:
-        print("Error stowing gear")
     return
 
   def destroy(self):
