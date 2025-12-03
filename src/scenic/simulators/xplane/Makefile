@@ -24,8 +24,10 @@ merge:
 	git checkout main
 	git pull
 	git merge simeon
+	git pull
 	git checkout chen
 	git pull
 	git merge main
+	git pull
 	git checkout simeon
 	git pull
