@@ -4,8 +4,6 @@ import numpy as np
 
 from xpc import XPlaneConnect
 
-SLEEP_TIME_SECONDS = 3
-
 """
    In its current state, the model only supports the Beechcraft Baron 58 airplane
    and the LOWS R 15 airport.
