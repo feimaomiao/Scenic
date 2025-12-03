@@ -18,10 +18,7 @@ from scenic.syntax.veneer import verbosePrint
 
 from scenic import scenarioFromFile
 
-try:
-  from xpc import XPlaneConnect
-except ImportError as exception:
-  raise RuntimeError('The X-Plane interface requires XPlaneConnect.') from exception
+from xpc import XPlaneConnect
 
 class XPlaneSimulator(Simulator):
 
