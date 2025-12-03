@@ -22,17 +22,16 @@ from xpc import XPlaneConnect
 
 class XPlaneSimulator(Simulator):
 
-  def __init__(self, scenic_file):
+  def __init__(self):
     super().__init__()
     
-    self.scenario = scenarioFromFile(scenic_file)
-    self.simulate(self.scenario)
-    return
+    # self.scenario = scenarioFromFile(scenic_file)
+    # self.simulate(self.scenario)
 
-    self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
-    self.simulation.setup()
-    self.simulation.executeActions([])
-    self.simulation.getProperties(None, None)
+    # self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
+    # self.simulation.setup()
+    # self.simulation.executeActions([])
+    # self.simulation.getProperties(None, None)
 
     return
 
@@ -116,8 +115,5 @@ def load_yaml(filename):
     return options
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser()
-  parser.add_argument('-f', '--scenic-file', help='scenic file')
-  args = parser.parse_args()
-
-  XPlaneSimulator(scenic_file=args.scenic_file)
+  print("Hello world!")
+  XPlaneSimulator()

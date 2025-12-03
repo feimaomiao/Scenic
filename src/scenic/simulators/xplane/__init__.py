@@ -4,6 +4,7 @@ See the `VerifAI distribution`_ for examples of how to use Scenic with X-Plane.
 
 .. _VerifAI distribution: https://github.com/BerkeleyLearnVerify/VerifAI
 """
+
 xpc = None
 try:
   from xpc import XPlaneConnect
@@ -12,4 +13,5 @@ except ImportError:
 
 if xpc:
   from .simulator import XPlaneSimulator
+
 del xpc
