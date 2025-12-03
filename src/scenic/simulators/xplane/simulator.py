@@ -46,16 +46,7 @@ class XPlaneSimulation(Simulation):
 
   def __init__(self, scene, **kwargs):
     # super().__init__(scene, **kwargs)
-
-    self.client = XPlaneWrapper()
-    print(self.client)
-    return
-
-    try:
-      self.client.getDREF("sim/test/test_float")
-    except:
-      raise RuntimeError("Failed to establish connection to XPlane.")
-
+    self.wrapper = XPlaneWrapper()
     return
 
   def setup(self):

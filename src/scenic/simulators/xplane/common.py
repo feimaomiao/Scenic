@@ -27,6 +27,12 @@ class XPlaneWrapper():
   def __init__(self):
     self.client = XPlaneConnect()
     return
+  
+  def getTestFloat(self):
+    try:
+      return self.client.getDREF("sim/test/test_float")
+    except:
+      raise RuntimeError("Failed to establish connection to XPlane.")
 
   def getPosition(self):
     position = self.client.getDREFs(self.COORDS_DREFS)
