@@ -7,7 +7,7 @@ See the `VerifAI distribution`_ for examples of how to use Scenic with X-Plane.
 
 xpc = None
 try:
-  from xpc import XPlaneConnect
+  import xpc
 except ImportError:
   raise RuntimeError('The X-Plane interface requires XPlaneConnect.')
 

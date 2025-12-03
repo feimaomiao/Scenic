@@ -23,6 +23,7 @@ from xpc import XPlaneConnect
 class XPlaneSimulator(Simulator):
 
   def __init__(self):
+    print("Hello from the simulator!")
     super().__init__()
     
     # self.scenario = scenarioFromFile(scenic_file)
