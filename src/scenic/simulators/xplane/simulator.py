@@ -29,7 +29,7 @@ class XPlaneSimulator(Simulator):
     super().__init__()
     
     self.scenario = scenarioFromFile(scenic_file)
-    print(self.scenario)
+    self.simulate(self.scenario)
     return
 
     self.simulation = self.createSimulation(None, maxSteps=0, name='xplane test', timestep=0)
