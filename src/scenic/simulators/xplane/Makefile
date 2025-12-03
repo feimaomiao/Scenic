@@ -17,5 +17,5 @@ location:
 example:
 	scenic ./example/example.scenic --axes
 
-location2:
-	python3 location2.py --scenic-file $(SCENIC_FILE)
+random_location:
+	python3 ./random_location.py --scenic-file $(SCENIC_FILE)
