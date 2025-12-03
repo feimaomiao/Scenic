@@ -40,10 +40,12 @@ class XPlaneSimulation(Simulation):
     self.wrapper = XPlaneWrapper()
     self.client = self.wrapper.client
 
+    self.maxSteps = kwargs["maxSteps"]
+    self.timestep = kwargs["timestep"]
+
     super().__init__(scene, **kwargs)
 
     self.scene = scene
-    print(self.scene)
     return
 
   def setup(self):
@@ -77,7 +79,7 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
-    time.sleep(SLEEP_TIME_SECONDS)
+    time.sleep(self.maxSteps)
     print("Simulation done!")
     return
 
