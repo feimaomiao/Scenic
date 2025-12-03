@@ -2,6 +2,8 @@
 """
 import math
 
+from scenic.simulators.xplane.simulator import XPlaneSimulator
+
 POINTS = [
   (850, 350.7986755371094, -31372),                            # top left corner
   (808.9561157226562, 351.1387634277344, -31355.494140625),    # top right corner
@@ -68,3 +70,5 @@ class Plane:
 param ratioo = ratio
 param real_lengthh = real_length
 param real_widthh = real_width
+
+simulator XPlaneSimulator()
