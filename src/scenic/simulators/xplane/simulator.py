@@ -48,7 +48,6 @@ class XPlaneSimulation(Simulation):
 
   def setup(self):
     position = self.scene.egoObject.position
-    ratioo = self.scene.params["ratioo"]
 
     # Rotation Matrix.
     R = np.array([
@@ -57,17 +56,17 @@ class XPlaneSimulation(Simulation):
     ])
 
     # Adjust according to center of runway.
-    location_random_2D = R @ np.array([position[0]*ratioo, position[1]*ratioo]) + \
+    location_random_2D = R @ np.array([position[0], position[1]]) + \
                              np.array([291.85, -32627.15])
 
-    height = ((position[1]*ratioo - (-self.scene.params["real_lengthh"]/2)) / \
-             self.scene.params["real_lengthh"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
+    height = ((position[1]- (-self.scene.params["runway_length"]/2)) / \
+             self.scene.params["runway_length"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
 
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
     self.wrapper.setLocation(location_random_3D)
 
-    super().setup()
+    # super().setup()
     return
 
   def createObjectInSimulator(self, obj):

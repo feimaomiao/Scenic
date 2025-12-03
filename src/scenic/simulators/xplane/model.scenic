@@ -36,16 +36,12 @@ def points_to_normalized_rectangle(points):
   length = max(edge1_length, edge2_length)
 
 
-  # Normalize width to 10 and scale height proportionally
-  normalized_width = 10
-  normalized_height = round((length / width) * normalized_width)
-  return ((0, 0, 0), 0, normalized_width, normalized_height, length, width)
+  return (width, length)
 
-vec, orientation, norm_width, norm_height, real_length, real_width = points_to_normalized_rectangle(POINTS)
+width, length= points_to_normalized_rectangle(POINTS)
 
-workspace = Workspace(RectangularRegion(vec,orientation, norm_width, norm_height, 'runway'))
+workspace = Workspace(RectangularRegion((0,0,0), 0, width, length, 'runway'))
 Runway = workspace
-ratio = real_width / norm_width
 
 class Plane:
   """ Bounding box representing the Beechcraft Baron 58. 
@@ -53,13 +49,12 @@ class Plane:
   # plane width = 11.53m
   # plane height = 2.97m
   # plane length = 9.09m
-  width: 11.53 / ratio
-  height: 2.97 / ratio
-  length: 9.09 / ratio
+  width: 11.53 
+  height: 2.97 
+  length: 9.09 
   shape: BoxShape()
 
-param ratioo = ratio
-param real_lengthh = real_length
-param real_widthh = real_width
+param runway_length = length
+param runway_width = width
 
 simulator XPlaneSimulator()
