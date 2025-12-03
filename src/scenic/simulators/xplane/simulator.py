@@ -43,7 +43,7 @@ class XPlaneSimulation(Simulation):
     super().__init__(scene, **kwargs)
 
     self.scene = scene
-    self.setup()
+    print(self.scene)
     return
 
   def setup(self):

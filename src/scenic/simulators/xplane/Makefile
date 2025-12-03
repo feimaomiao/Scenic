@@ -28,7 +28,7 @@ merge:
 	git pull
 	git merge main
 	git push
-	git checkout xplane-runway-tracking
+	git checkout xplane-simulator
 	git pull
 	git merge main
 	git push
