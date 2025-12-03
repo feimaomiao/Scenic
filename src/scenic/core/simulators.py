@@ -700,10 +700,6 @@ class Simulation(abc.ABC):
             dynTypes = obj._simulatorProvidedProperties
             properties = set(dynTypes)
 
-            print(obj)
-            print(properties)
-            print(self.getProperties(obj, properties))
-
             values = self.getProperties(obj, properties)
             assert properties == set(values), properties ^ set(values)
             for prop, value in values.items():

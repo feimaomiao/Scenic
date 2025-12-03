@@ -43,7 +43,7 @@ class XPlaneSimulation(Simulation):
     super().__init__(scene, **kwargs)
 
     self.scene = scene
-    self.setup()
+    print(self.scene)
     return
 
   def setup(self):
@@ -76,16 +76,23 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
+    time.sleep(SLEEP_TIME_SECONDS)
+    print("Simulation done!")
     return
 
   def getProperties(self, obj, properties):
-    defaultProps = [0 for i in range(0, len(properties))]
-    return defaultProps
+    props = {}
+
+    props["yaw"] = 0
+    props["velocity"] = Vector(0, 0, 0)
+    props["position"] = Vector(0, 0, 0)
+    props["speed"] = 0
+    props["roll"] = 0
+    props["angularSpeed"] = 0
+    props["pitch"] = 0
+    props["angularVelocity"] = Vector(0, 0, 0)
+
+    return props
 
   def destroy(self):
     return
-
-def load_yaml(filename):
-    with open(filename, 'r') as stream:
-        options = yaml.safe_load(stream)
-    return options
