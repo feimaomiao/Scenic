@@ -4,7 +4,6 @@ import math
 import os
 import traceback
 import warnings
-import time
 
 import yaml
 from dotmap import DotMap
@@ -46,31 +45,29 @@ class XPlaneSimulation(Simulation):
 
   def __init__(self, scene, **kwargs):
     # super().__init__(scene, **kwargs)
+
     self.wrapper = XPlaneWrapper()
+    self.scene = scene
+    self.setup()
     return
 
   def setup(self):
     # super().setup()
 
-    # Set position of the player aircraft
-    #       Lat     Lon         Alt   Pitch Roll Yaw Gear
-    posi = [47.80460447599387, 12.996827345547088,
-            429.2803463173907, 0.6177443265914917, 
-            -0.6730020046234131, 156.9822235107422, 1.0]
-    self.client.sendPOSI(posi)
+    # print(f'ego has foo = {scene.egoObject.width}, {scene.egoObject.position}, {scene.params}')
+    position = self.scene.egoObject.position
+    ratioo = self.scene.params["ratioo"]
+    R = np.array([     # rotation matrix
+      [0.9201568,  0.3915501],
+      [-0.3915501, 0.9201568]
+    ])
+    location_random_2D = R @ np.array([position[0]*ratioo, position[1]*ratioo]) + np.array([291.85, -32627.15])  # adjust according to center of runway
+    height = ((position[1]*ratioo - (-self.scene.params["real_lengthh"]/2)) / self.scene.params["real_lengthh"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
+    location_random_3D = (location_random_2D[0], height, location_random_2D[1])
+    # print(location_random_3D)
 
-    # Set angle of attack, velocity, and orientation using the DATA command
-    data = [\
-        [18,   0, -998,   0, -998, -998, -998, -998, -998],\
-        [ 3, 130,  130, 130,  130, -998, -998, -998, -998],\
-        [16,   0,    0,   0, -998, -998, -998, -998, -998]\
-        ]
-    self.client.sendDATA(data)
-
-    # Set control surfaces and throttle of the player aircraft using sendCTRL
-    ctrl = [0.0, 0.0, 0.0, 0.8]
-    self.client.sendCTRL(ctrl)
-
+    self.wrapper.setLocation(location_random_3D)
+    time.sleep(SLEEP_TIME_SECONDS)
     return
 
   def createObjectInSimulator(self, obj):
