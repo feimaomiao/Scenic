@@ -4,8 +4,8 @@ See the `VerifAI distribution`_ for examples of how to use Scenic with X-Plane.
 
 .. _VerifAI distribution: https://github.com/BerkeleyLearnVerify/VerifAI
 """
-
 xpc = None
+
 try:
   import xpc
 except ImportError:

@@ -5,34 +5,11 @@ from time import sleep
 import numpy as np
 import argparse
 from xpc import XPlaneConnect
-from common import *
+from scenic.simulators.xplane.common import *
 
 from scenic import scenarioFromFile
 
 SLEEP_TIME_SECONDS = 3
-
-class XPlaneWrapper():
-  X_DREF = "sim/flightmodel/position/local_x"
-  Y_DREF = "sim/flightmodel/position/local_y"
-  Z_DREF = "sim/flightmodel/position/local_z"
-  COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
-
-  def __init__(self):
-    self.client = XPlaneConnect()
-    return
-
-  def getPosition(self):
-    position = self.client.getDREFs(self.COORDS_DREFS)
-    return tuple([int(coord[0]) for coord in position])
-
-  def setOffset(self, dref, offset):
-    self.client.sendDREF(dref, self.client.getDREF(dref)[0] + offset)
-    return
-
-  def setLocation(self, location):
-    self.client.sendDREFs(self.COORDS_DREFS, [location[0], location[1], location[2]])
-    return
-
 
 if __name__ == "__main__":
   client = XPlaneWrapper()

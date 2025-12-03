@@ -3,8 +3,7 @@
 """
 import csv
 import time
-from location import XPlaneWrapper
-
+from scenic.simulators.xplane.common import *
 
 def write_elevations_csv(output_file='elevations.csv', update_interval=1.5):
     """

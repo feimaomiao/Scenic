@@ -17,13 +17,15 @@ from scenic.syntax.veneer import verbosePrint
 
 from scenic import scenarioFromFile
 
+from scenic.simulators.xplane.common import *
+
 from xpc import XPlaneConnect
 
 class XPlaneSimulator(Simulator):
 
   def __init__(self):
     super().__init__()
-    
+
     # self.scenario = scenarioFromFile(scenic_file)
     # self.simulate(self.scenario)
 
@@ -31,8 +33,6 @@ class XPlaneSimulator(Simulator):
     # self.simulation.setup()
     # self.simulation.executeActions([])
     # self.simulation.getProperties(None, None)
-
-    time.sleep(10)
     return
 
   def createSimulation(self, scene, **kwargs):
@@ -47,7 +47,9 @@ class XPlaneSimulation(Simulation):
   def __init__(self, scene, **kwargs):
     # super().__init__(scene, **kwargs)
 
-    self.client = XPlaneConnect()
+    self.client = XPlaneWrapper()
+    print(self.client)
+    return
 
     try:
       self.client.getDREF("sim/test/test_float")
