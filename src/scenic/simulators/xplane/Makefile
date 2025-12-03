@@ -19,3 +19,10 @@ example:
 
 random_location:
 	python3 ./scripts/random_location.py --scenic-file $(SCENIC_FILE)
+
+merge:
+	git checkout main
+	git merge simeon
+	git checkout chen
+	git merge main
+	git checkout simeon
