@@ -80,13 +80,7 @@ class XPlaneSimulation(Simulation):
     return
 
   def getProperties(self, obj, properties):
-    defaultProps = [0 for i in range(0, len(properties))]
-    return defaultProps
+    return properties
 
   def destroy(self):
     return
-
-def load_yaml(filename):
-    with open(filename, 'r') as stream:
-        options = yaml.safe_load(stream)
-    return options
