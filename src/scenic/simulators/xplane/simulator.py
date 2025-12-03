@@ -47,8 +47,6 @@ class XPlaneSimulation(Simulation):
     return
 
   def setup(self):
-    # super().setup()
-
     position = self.scene.egoObject.position
     ratioo = self.scene.params["ratioo"]
 
@@ -68,6 +66,8 @@ class XPlaneSimulation(Simulation):
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
     self.wrapper.setLocation(location_random_3D)
+
+    super().setup()
     return
 
   def createObjectInSimulator(self, obj):
@@ -80,7 +80,8 @@ class XPlaneSimulation(Simulation):
     return
 
   def getProperties(self, obj, properties):
-    return
+    defaultProps = [0 for i in range(0, len(properties))]
+    return defaultProps
 
   def destroy(self):
     return
