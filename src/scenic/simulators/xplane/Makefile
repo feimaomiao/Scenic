@@ -22,7 +22,10 @@ random_location:
 
 merge:
 	git checkout main
+	git pull
 	git merge simeon
 	git checkout chen
+	git pull
 	git merge main
 	git checkout simeon
+	git pull
