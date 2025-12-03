@@ -77,6 +77,8 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
+    time.sleep(SLEEP_TIME_SECONDS)
+    print("Simulation done!")
     return
 
   def getProperties(self, obj, properties):

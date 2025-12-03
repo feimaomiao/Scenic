@@ -5,7 +5,7 @@ SCENIC_FILE="../../../../examples/xplane/example.scenic"
 all: simulator
 
 simulate:
-	scenic $(SCENIC_FILE) --axes --simulate -b
+	scenic $(SCENIC_FILE) --axes --simulate --count=5 -b
 
 simulator:
 	python3 simulator.py --scenic-file $(SCENIC_FILE)
