@@ -4,11 +4,10 @@ import math
 import os
 import traceback
 import warnings
+import time
 
 import yaml
 from dotmap import DotMap
-
-from time import sleep
 
 import scenic.core.errors as errors
 from scenic.core.simulators import Simulation, SimulationCreationError, Simulator
@@ -23,7 +22,6 @@ from xpc import XPlaneConnect
 class XPlaneSimulator(Simulator):
 
   def __init__(self):
-    print("Hello from the simulator!")
     super().__init__()
     
     # self.scenario = scenarioFromFile(scenic_file)
@@ -34,6 +32,7 @@ class XPlaneSimulator(Simulator):
     # self.simulation.executeActions([])
     # self.simulation.getProperties(None, None)
 
+    time.sleep(10)
     return
 
   def createSimulation(self, scene, **kwargs):
@@ -95,7 +94,7 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
-    sleep(4)
+    time.sleep(4)
     return
 
   def getProperties(self, obj, properties):
@@ -114,7 +113,3 @@ def load_yaml(filename):
     with open(filename, 'r') as stream:
         options = yaml.safe_load(stream)
     return options
-
-if __name__ == "__main__":
-  print("Hello world!")
-  XPlaneSimulator()
