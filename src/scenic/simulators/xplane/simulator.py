@@ -68,7 +68,7 @@ class XPlaneSimulation(Simulation):
 
     self.wrapper.setLocation(location_random_3D)
 
-    # super().setup()
+    super().setup()
     return
 
   def createObjectInSimulator(self, obj):
@@ -85,14 +85,21 @@ class XPlaneSimulation(Simulation):
   def getProperties(self, obj, properties):
     props = {}
 
-    props["yaw"] = 0
-    props["velocity"] = Vector(0, 0, 0)
-    props["position"] = Vector(0, 0, 0)
-    props["speed"] = 0
-    props["roll"] = 0
-    props["angularSpeed"] = 0
-    props["pitch"] = 0
-    props["angularVelocity"] = Vector(0, 0, 0)
+    # print(self.client.getDREF("sim/flightmodel/position/beta"))
+    props["yaw"] = self.client.getDREF("sim/flightmodel/position/beta")[0]
+    vx, vy, vz = self.client.getDREFs(["sim/flightmodel/position/local_vx",
+                                       "sim/flightmodel/position/local_vy",
+                                       "sim/flightmodel/position/local_vz"])
+    props["velocity"] = Vector(vx, vy, vz)
+    x, y, z = self.client.getDREFs(["sim/flightmodel/position/local_x",
+                                     "sim/flightmodel/position/local_y",
+                                     "sim/flightmodel/position/local_z"])
+    props["position"] = Vector(x, y, z)
+    props["speed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
+    props["roll"] = self.client.getDREF("sim/flightmodel/position/phi")[0]
+    props["angularSpeed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
+    props["pitch"] = self.client.getDREF("sim/flightmodel/position/alpha")[0]
+    props["angularVelocity"] = Vector(vx,vy,vz)
 
     return props
 
