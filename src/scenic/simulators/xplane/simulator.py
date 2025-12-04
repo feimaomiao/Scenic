@@ -76,12 +76,12 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
-    self.wrapper.client.pauseSim(True)
+    # self.wrapper.client.pauseSim(True)
 
     # `self.timestep` has a value of 1 by default.
     time.sleep(self.timestep)
 
-    self.wrapper.client.pauseSim(False)
+    # self.wrapper.client.pauseSim(False)
     return
 
   def getProperties(self, obj, properties):
