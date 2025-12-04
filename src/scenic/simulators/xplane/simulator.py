@@ -42,12 +42,14 @@ class XPlaneSimulation(Simulation):
     self.scene = scene
     self.maxSteps = kwargs["maxSteps"]
 
+    self.maxSteps = kwargs["maxSteps"]
+    self.timestep = kwargs["timestep"]
+
     super().__init__(scene, **kwargs)
     return
 
   def setup(self):
     position = self.scene.egoObject.position
-    ratioo = self.scene.params["ratioo"]
 
     # Rotation Matrix.
     R = np.array([
@@ -56,11 +58,11 @@ class XPlaneSimulation(Simulation):
     ])
 
     # Adjust according to center of runway.
-    location_random_2D = R @ np.array([position[0]*ratioo, position[1]*ratioo]) + \
+    location_random_2D = R @ np.array([position[0], position[1]]) + \
                              np.array([291.85, -32627.15])
 
-    height = ((position[1]*ratioo - (-self.scene.params["real_lengthh"]/2)) / \
-             self.scene.params["real_lengthh"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
+    height = ((position[1]- (-self.scene.params["runway_length"]/2)) / \
+             self.scene.params["runway_length"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
 
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
@@ -83,14 +85,21 @@ class XPlaneSimulation(Simulation):
   def getProperties(self, obj, properties):
     props = {}
 
-    props["yaw"] = 0
-    props["velocity"] = Vector(0, 0, 0)
-    props["position"] = Vector(0, 0, 0)
-    props["speed"] = 0
-    props["roll"] = 0
-    props["angularSpeed"] = 0
-    props["pitch"] = 0
-    props["angularVelocity"] = Vector(0, 0, 0)
+    # print(self.client.getDREF("sim/flightmodel/position/beta"))
+    props["yaw"] = self.client.getDREF("sim/flightmodel/position/beta")[0]
+    vx, vy, vz = self.client.getDREFs(["sim/flightmodel/position/local_vx",
+                                       "sim/flightmodel/position/local_vy",
+                                       "sim/flightmodel/position/local_vz"])
+    props["velocity"] = Vector(vx, vy, vz)
+    x, y, z = self.client.getDREFs(["sim/flightmodel/position/local_x",
+                                     "sim/flightmodel/position/local_y",
+                                     "sim/flightmodel/position/local_z"])
+    props["position"] = Vector(x, y, z)
+    props["speed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
+    props["roll"] = self.client.getDREF("sim/flightmodel/position/phi")[0]
+    props["angularSpeed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
+    props["pitch"] = self.client.getDREF("sim/flightmodel/position/alpha")[0]
+    props["angularVelocity"] = Vector(vx,vy,vz)
 
     return props
 
