@@ -41,8 +41,6 @@ class XPlaneSimulation(Simulation):
     self.client = self.wrapper.client
     self.scene = scene
     self.maxSteps = kwargs["maxSteps"]
-
-    self.maxSteps = kwargs["maxSteps"]
     self.timestep = kwargs["timestep"]
 
     super().__init__(scene, **kwargs)
