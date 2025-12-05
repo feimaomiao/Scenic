@@ -17,8 +17,7 @@ with open('config.json', 'r') as f:
     config = json.load(f)
 
 flight_plan_string = \
-"""
-I
+"""I
 1100 Version
 CYCLE 2406
 ADEP LOWS
