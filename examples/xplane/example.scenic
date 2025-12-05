@@ -40,6 +40,12 @@ write_flight_plan(xplane_install_path, flight_plan_string, config["fpl_name"])
 """
 POINTS = config["points"]
 
+class BeechcraftBaron58:
+    width :11.53
+    height :2.97
+    length :9.09
+    shape :BoxShape()
+
 param points = POINTS[:4]
 
 startingpoint = (-237.63894653320312, 337.91754150390625, -33869.328125) # Beginning of runway R15
