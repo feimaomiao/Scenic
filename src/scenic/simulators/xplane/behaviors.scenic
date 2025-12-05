@@ -28,5 +28,4 @@ behavior FlyRoute(startingpoint):
     # first the plane is teleported to the starting point
     take TeleportAction(startingpoint)
     do setFPMBehavior(430)
-    take SetFPMAction(430)
     take SetAutopilotAction(enabled=True)
