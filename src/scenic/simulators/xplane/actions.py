@@ -22,28 +22,22 @@ class TeleportAction(Action):
         print("Applying TeleportAction to target_coord:", self.target_coord)
         sim.wrapper.setLocation(self.target_coord)
 
-class SetFPMAction(Action):
+class SendCOMMAction(Action):
     """
-    This Action sets the flight plan in X-Plane using a specified FMS file.
+    This Action sends a COMM command to X-Plane.
 
     Args:
-        fms_file: Path to the FMS file to load
+        command: The COMM command string to send
     """
 
-    def __init__(self, board_code):
-        print("SetFPMAction initialized")
-        self.code = board_code
+    def __init__(self, command):
+        print("SendCOMMAction initialized with command:", command)
+        self.command = command
 
     def applyTo(self, obj, sim):
-        """Set the flight plan in X-Plane using the provided FMS file."""
-        print("Opening GPS 430 Flight Plan page...")
-        if self.code == 430:
-            sim.wrapper.g430_setflightplan()
-        else:
-            # If you're reading this and want to implement other board codes, check the following link
-            # https://www.siminnovations.com/xplane/command/?name=sim%2FGPS&description=&submit=Search
-            raise ValueError("Unsupported board code for flight plan setting, gotta implement it yourself!")
-        
+        """Send the COMM command to X-Plane."""
+        print(f"Sending COMM command: {self.command}")
+        sim.wrapper.client.sendCOMM(self.command)
 
 
 class SetAutopilotAction(Action):
