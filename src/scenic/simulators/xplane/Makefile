@@ -1,4 +1,5 @@
 SCENIC_FILE="../../../../examples/xplane/example.scenic"
+CONFIG_FILE="../../../../examples/xplane/config.json"
 
 .PHONY: simulator location example
 
@@ -8,6 +9,7 @@ simulate:
 	scenic $(SCENIC_FILE) --axes --simulate --count=5 --time=10 --verbosity=3 -b
 
 simulator:
+	ln -s $(CONFIG_FILE) .
 	python3 simulator.py --scenic-file $(SCENIC_FILE)
 
 location:
