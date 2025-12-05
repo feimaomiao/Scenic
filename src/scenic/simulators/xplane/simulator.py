@@ -99,7 +99,11 @@ class XPlaneSimulation(Simulation):
     super().setup()
     return
 
+  """ Assumption is that all objects are agents, which are airplanes in the simulator.
+  """
   def createObjectInSimulator(self, obj):
+    obj.blueprint = "Plane"
+    obj.crashed = False
     return
 
   def executeActions(self, allActions):
@@ -115,6 +119,9 @@ class XPlaneSimulation(Simulation):
 
     # self.wrapper.client.pauseSim(False)
     return
+  
+  def _isPlane(self, obj):
+    return obj.blueprint == "Plane"
 
   def getProperties(self, obj, properties):
     props = {}
@@ -140,9 +147,10 @@ class XPlaneSimulation(Simulation):
     props["angularSpeed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
     props["pitch"] = self.client.getDREF("sim/flightmodel/position/alpha")[0]
     props["angularVelocity"] = Vector(vx,vy,vz)
+    
+    if self._isPlane(obj):
+      obj.crashed = self.wrapper.getCrashed()
 
-    print(obj)
-    self.wrapper.getCrashed()
     return props
 
   def destroy(self):

@@ -40,7 +40,7 @@ write_flight_plan(xplane_install_path, flight_plan_string, config["fpl_name"])
 """
 POINTS = config["points"]
 
-class BeechcraftBaron58:
+class BeechcraftBaron58(Plane):
     width :11.53
     height :2.97
     length :9.09
