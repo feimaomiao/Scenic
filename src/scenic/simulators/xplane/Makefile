@@ -1,14 +1,13 @@
 SCENIC_FILE="../../../../examples/xplane/example.scenic"
 CONFIG_FILE="../../../../examples/xplane/config.json"
-FPS_FILE="../../../../examples/xplane/fp1.fms"
-EXAMPLE_FILES="../../../../examples/xplane/*"
+FP1_FILE="../../../../examples/xplane/fp1.fms"
 
 .PHONY: simulator location example
 
 all: simulator
 
 simulate:
-	ln -s $(EXAMPLE_FILES) .
+	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
 	scenic $(SCENIC_FILE) --axes --simulate --count=5 --time=10 --verbosity=3 -b
 
 simulator:
