@@ -42,25 +42,55 @@ class XPlaneSimulation(Simulation):
     self.scene = scene
     self.maxSteps = kwargs["maxSteps"]
     self.timestep = kwargs["timestep"]
+    self.points = scene.params.get("points")
 
     super().__init__(scene, **kwargs)
     return
 
   def setup(self):
+    """The setup function places the plane on a random location on the runway
+    """
     position = self.scene.egoObject.position
 
-    # Rotation Matrix.
+    # Calculate rotation matrix from the four rectangle points.
+    p0 = self.points[0]  # top left
+    p1 = self.points[1]  # top right
+    p2 = self.points[2]  # bottom left
+    p3 = self.points[3]  # bottom right
+
+    # Calculate the along-runway direction (from bottom to top) in X-Plane coordinates.
+    # This determines how Scenic's y-axis (along runway) maps to X-Plane's coordinate system.
+    bottom_center_x = (p2[0] + p3[0]) / 2
+    bottom_center_z = (p2[2] + p3[2]) / 2
+    top_center_x = (p0[0] + p1[0]) / 2
+    top_center_z = (p0[2] + p1[2]) / 2
+
+    runway_dx = top_center_x - bottom_center_x
+    runway_dz = top_center_z - bottom_center_z
+
+    # Calculate rotation angle of the runway.
+    angle = np.arctan2(runway_dz, runway_dx)
+
+    # Build rotation matrix that maps Scenic coordinates to X-Plane coordinates.
+    # Scenic's x-axis (cross-runway) maps to perpendicular of runway direction.
+    # Scenic's y-axis (along-runway) maps to runway direction.
+    cos_theta = np.cos(angle)
+    sin_theta = np.sin(angle)
     R = np.array([
-      [0.9201568,  0.3915501],
-      [-0.3915501, 0.9201568]
+      [sin_theta,   cos_theta],
+      [-cos_theta,  sin_theta]
     ])
+
+    # Calculate center of runway from the four corners.
+    center_x = (p0[0] + p1[0] + p2[0] + p3[0]) / 4
+    center_z = (p0[2] + p1[2] + p2[2] + p3[2]) / 4
 
     # Adjust according to center of runway.
     location_random_2D = R @ np.array([position[0], position[1]]) + \
-                             np.array([291.85, -32627.15])
+                             np.array([center_x, center_z])
 
     height = ((position[1]- (-self.scene.params["runway_length"]/2)) / \
-             self.scene.params["runway_length"]) * (POINTS[0][1]-POINTS[3][1]) + POINTS[3][1] 
+             self.scene.params["runway_length"]) * (self.points[0][1]-self.points[3][1]) + self.points[3][1]
 
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
