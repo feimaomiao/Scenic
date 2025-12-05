@@ -9,6 +9,7 @@ all: simulator
 simulate:
 	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
 	scenic $(SCENIC_FILE) --axes --simulate --count=5 --time=10 --verbosity=3 -b
+	git clean ../.. -f
 
 simulator:
 	python3 simulator.py --scenic-file $(SCENIC_FILE)
