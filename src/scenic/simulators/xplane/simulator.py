@@ -99,7 +99,7 @@ class XPlaneSimulation(Simulation):
     super().setup()
     return
 
-  """ Assumption is that all objects are agents, which are airplanes in the simulator.
+  """ Assumption is that all objects are agents, and the agents are airplanes.
   """
   def createObjectInSimulator(self, obj):
     obj.blueprint = "Plane"
