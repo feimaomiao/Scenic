@@ -22,10 +22,14 @@ behavior setFPMBehavior(board_code):
     take SendCOMMAction("sim/GPS/g430n1_page_up")
     take SendCOMMAction("sim/GPS/g430n1_cursor")
     take SendCOMMAction("sim/GPS/g430n1_ent")
+    take SendCOMMAction("sim/GPS/g430n1_cursor")
+    take SendCOMMAction("sim/GPS/g430n1_ent")
 
 
 behavior FlyRoute(startingpoint):
     # first the plane is teleported to the starting point
+    take SetAutopilotAction(enabled=False)
     take TeleportAction(startingpoint)
     do setFPMBehavior(430)
+    # then the plane is set to fly the route
     take SetAutopilotAction(enabled=True)

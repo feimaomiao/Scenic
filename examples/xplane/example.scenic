@@ -5,6 +5,8 @@ from scenic.simulators.xplane.model import *
 
 from scenic.simulators.xplane.behaviors import *
 
+from scenic.simulators.xplane.common import write_flight_plan
+
 from pathlib import Path
 
 import json
@@ -14,21 +16,23 @@ import shutil
 with open('config.json', 'r') as f:
     config = json.load(f)
 
-fms_path = Path(config["xplane-install"]) / "Output" / "FMS plans"
+flight_plan_string = \
+"""
+I
+1100 Version
+CYCLE 2406
+ADEP LOWS
+ADES LOIK
+NUMENR 3
+1 LOWS ADEP 1411.000000 47.793427 13.003893
+11 RADIZ DRCT 14486.000000 47.626286 12.538625
+1 LOIK ADES 1586.000000 47.564631 12.127270
+"""
 
-flight_plan = config["flight-path"]
+# Write flight plan to X-Plane installation directory
+xplane_install_path = Path(config["xplane-install"])
 
-# copy flight plan to X-Plane FMS plans directory
-source = Path(flight_plan)
-destination = fms_path / source.name
-fms_path.mkdir(parents=True, exist_ok=True)
-
-#remove every other file in the directory 
-for item in fms_path.iterdir():
-    if item.is_file() and item != destination:
-        item.unlink()
-
-shutil.copy2(source, destination)
+write_flight_plan(xplane_install_path, flight_plan_string, config["fpl_name"])
 
 
 """
