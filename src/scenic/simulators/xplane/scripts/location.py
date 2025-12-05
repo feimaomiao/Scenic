@@ -1,7 +1,7 @@
 """ This script gets the corners of the runway for the LOWS R 15 airport runway assumping
     that the player is flying the Beechcraft Baron 58 aircraft.
 """
-from time import sleep
+import time
 
 from xpc import XPlaneConnect
 
@@ -34,14 +34,20 @@ if __name__ == "__main__":
   client = XPlaneWrapper()
 
   CENTER = client.getPosition()
-  locations = [
-    (851.549560546875, 350.7986755371094, -31377.404296875),    # top left corner
-    (808.9561157226562, 351.1387634277344, -31355.494140625),   # top right corner
-    (-225.74005126953125, 337.68798828125, -33897.8203125),     # bottom left corner
-    (-266.25006103515625, 337.9598083496094, -33882.296875),    # bottom right corner
-    (-237, 338, -33869)                                         # center of runway
-  ]
+  print("Current position:", CENTER)
+  # locations = [
+  #   (851.549560546875, 350.7986755371094, -31377.404296875),    # top left corner
+  #   (808.9561157226562, 351.1387634277344, -31355.494140625),   # top right corner
+  #   (-225.74005126953125, 337.68798828125, -33897.8203125),     # bottom left corner
+  #   (-266.25006103515625, 337.9598083496094, -33882.296875),    # bottom right corner
+  #   (-237, 338, -33869)                                         # center of runway
+  # ]
 
-  for location in locations:
-    client.setLocation(location)
-    sleep(SLEEP_TIME_SECONDS)
+  # for location in locations:
+  #   client.setLocation(location)
+  #   sleep(SLEEP_TIME_SECONDS)
+  # client.client.sendCOMM("sim/FMS/index")
+  # with XPlaneConnect() as client:
+  #   client.sendCOMM("sim/FMS/legs")
+  #   time.sleep(SLEEP_TIME_SECONDS)
+

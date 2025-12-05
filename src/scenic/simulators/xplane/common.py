@@ -13,7 +13,7 @@ class XPlaneWrapper():
   COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
   def __init__(self):
-    self.client = XPlaneConnect()
+    self.client = XPlaneConnect(timeout=10000)
     return
   
   def getTestFloat(self):
@@ -33,3 +33,20 @@ class XPlaneWrapper():
   def setLocation(self, location):
     self.client.sendDREFs(self.COORDS_DREFS, [location[0], location[1], location[2]])
     return
+  
+  def g430_setflightplan(self):
+    self.client.sendCOMM("sim/GPS/g430n1_msg")
+    time.sleep(0.5)  # Wait for the GPS to process the command
+    self.client.sendCOMM("sim/GPS/g430n1_proc")
+    time.sleep(0.5)  # Wait for the GPS to process the command
+    self.client.sendCOMM("sim/GPS/g430n1_fpl")
+    time.sleep(0.5)  # Wait for the GPS to process the command
+    self.client.sendCOMM("sim/GPS/g430n1_page_up")
+    time.sleep(0.5)
+    self.client.sendCOMM("sim/GPS/g430n1_cursor")
+    time.sleep(0.5)
+    self.client.sendCOMM("sim/GPS/g430n1_ent")
+    print("Flight plan set on GPS 430.")
+
+  def setAutopilotMode(self, mode):
+    self.client.sendDREF("sim/operation/prefs/ai_flies_aircraft", mode)

@@ -103,9 +103,11 @@ class XPlaneSimulation(Simulation):
     return
 
   def executeActions(self, allActions):
+    super().executeActions(allActions)
     return
 
   def step(self):
+    print("Stepping simulation")
     # self.wrapper.client.pauseSim(True)
 
     # `self.timestep` has a value of 1 by default.
@@ -126,7 +128,13 @@ class XPlaneSimulation(Simulation):
     x, y, z = self.client.getDREFs(["sim/flightmodel/position/local_x",
                                      "sim/flightmodel/position/local_y",
                                      "sim/flightmodel/position/local_z"])
-    props["position"] = Vector(x, y, z)
+    
+    # calculate relative position to origin (0,0,0)
+    # (0,0,0) is the middle point of self.points
+    origin_x = sum([point[0] for point in self.points]) / 4
+    origin_y = sum([point[1] for point in self.points]) / 4
+    origin_z = sum([point[2] for point in self.points]) / 4
+    props["position"] = Vector(x[0] - origin_x, y[0] - origin_y, z[0] - origin_z)
     props["speed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
     props["roll"] = self.client.getDREF("sim/flightmodel/position/phi")[0]
     props["angularSpeed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
