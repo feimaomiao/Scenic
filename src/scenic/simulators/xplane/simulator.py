@@ -141,6 +141,7 @@ class XPlaneSimulation(Simulation):
     props["pitch"] = self.client.getDREF("sim/flightmodel/position/alpha")[0]
     props["angularVelocity"] = Vector(vx,vy,vz)
 
+    print(obj)
     self.wrapper.getCrashed()
     return props
 
