@@ -34,3 +34,10 @@ merge:
 	git push
 	git checkout simeon
 	git pull
+
+get-cheuk:
+	git checkout xplane-simulator
+	git pull
+	git checkout simeon
+	git merge xplane-simulator
+	git push
