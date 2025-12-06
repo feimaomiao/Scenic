@@ -3,10 +3,6 @@ try:
 except ModuleNotFoundError:
     pass    # ignore; error will be caught later if user attempts to run a simulation
 
-# behavior TeleportBehavior(targetPosition):
-#     """Behavior that teleports the ego to a specified position."""
-#     take TeleportAction(targetPosition)
-
 behavior waitingBehavior(count = 0):
     """Behavior that waits indefinitely."""
     while count > 0:
