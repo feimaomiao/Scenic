@@ -22,6 +22,16 @@ class TeleportAction(Action):
         print("Applying TeleportAction to target_coord:", self.target_coord)
         sim.wrapper.setLocation(self.target_coord)
 
+class SetErrorAction(Action):
+    def __init__(self, cmd):
+        print(f"SetErrorAction initialized to send {cmd}")
+        self.cmd = cmd
+
+    def applyTo(self, obj, sim):
+        """Set an error state in the simulation."""
+        print(f"Setting error state in simulation")
+        print(f"{sim.wrapper.client.sendDREF(self.cmd, 6)}")  # Example of sending a control command
+
 class SendCOMMAction(Action):
     """
     This Action sends a COMM command to X-Plane.
@@ -39,6 +49,19 @@ class SendCOMMAction(Action):
         print(f"Sending COMM command: {self.command}")
         sim.wrapper.client.sendCOMM(self.command)
 
+class SetRecoverAction(Action):
+    """
+    This Action recovers the aircraft from a crashed state in X-Plane.
+    """
+
+    def __init__(self, recover_time = 15):
+        self.recover_time = recover_time
+        print(f"SetRecoverAction initialized with recover_time: {self.recover_time}")
+
+    def applyTo(self, obj, sim):
+        """Recover the aircraft from a crashed state."""
+        sim.recoverCounter = self.recover_time
+        sim.recovered = True
 
 class SetAutopilotAction(Action):
     """
@@ -56,5 +79,4 @@ class SetAutopilotAction(Action):
         """Set the autopilot mode in X-Plane."""
         print(f"Setting autopilot mode to: {self.mode}")
         # Implement the logic to set the autopilot mode using X-Plane's wrapper
-        # This is a placeholder; actual implementation will depend on X-Plane's API
         sim.wrapper.setAutopilotMode(self.mode)

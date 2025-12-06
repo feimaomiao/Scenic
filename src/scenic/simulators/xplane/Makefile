@@ -1,23 +1,22 @@
 SCENIC_FILE="../../../../examples/xplane/example.scenic"
 CONFIG_FILE="../../../../examples/xplane/config.json"
-FP1_FILE="../../../../examples/xplane/fp1.fms"
 
 .PHONY: simulator location example
 
 all: simulator
 
 simulate:
-	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
+	ln -s -f $(CONFIG_FILE) .
 	scenic $(SCENIC_FILE) --axes --show-records --simulate --count=5 -b
 	git clean ../.. -f
 
 simulate_verbose:
-	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
+	ln -s -f $(CONFIG_FILE) .
 	scenic $(SCENIC_FILE) --axes --simulate --count=1 --verbosity=3 -b
 	git clean ../.. -f
 
 simulate-finite:
-	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
+	ln -s -f $(CONFIG_FILE) .
 	scenic $(SCENIC_FILE) --axes --simulate --count=5 --time=10 --verbosity=3 -b
 	git clean ../.. -f
 
@@ -37,14 +36,6 @@ merge:
 	git checkout main
 	git pull
 	git merge simeon
-	git push
-	git checkout chen
-	git pull
-	git merge main
-	git push
-	git checkout xplane-simulator
-	git pull
-	git merge main
 	git push
 	git checkout simeon
 	git pull

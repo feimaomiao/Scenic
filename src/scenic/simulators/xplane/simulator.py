@@ -43,6 +43,11 @@ class XPlaneSimulation(Simulation):
     self.maxSteps = kwargs["maxSteps"]
     self.timestep = kwargs["timestep"]
     self.points = scene.params.get("points")
+    self.recovered = False
+    self.recoverCounter = 100
+    # wait while simulator resets
+    while self.wrapper.getCrashed():
+      time.sleep(1)
 
     super().__init__(scene, **kwargs)
     return
@@ -108,6 +113,7 @@ class XPlaneSimulation(Simulation):
   def createObjectInSimulator(self, obj):
     obj.blueprint = "Plane"
     obj.crashed = False
+    obj.recovered = False
     return
 
   def executeActions(self, allActions):
@@ -115,13 +121,9 @@ class XPlaneSimulation(Simulation):
     return
 
   def step(self):
-    print("Stepping simulation")
-    # self.wrapper.client.pauseSim(True)
-
-    # `self.timestep` has a value of 1 by default.
     time.sleep(self.timestep)
-
-    # self.wrapper.client.pauseSim(False)
+    if self.recovered:
+      self.recoverCounter -= 1
     return
   
   def _isPlane(self, obj):
@@ -130,21 +132,20 @@ class XPlaneSimulation(Simulation):
   def getProperties(self, obj, properties):
     props = {}
 
-    # print(self.client.getDREF("sim/flightmodel/position/beta"))
     props["yaw"] = self.client.getDREF("sim/flightmodel/position/beta")[0]
-    vx, vy, vz = self.client.getDREFs(["sim/flightmodel/position/local_vx",
+    vx, vz,vy = self.client.getDREFs(["sim/flightmodel/position/local_vx",
                                        "sim/flightmodel/position/local_vy",
                                        "sim/flightmodel/position/local_vz"])
     props["velocity"] = Vector(vx, vy, vz)
-    x, y, z = self.client.getDREFs(["sim/flightmodel/position/local_x",
+    x, z, y = self.client.getDREFs(["sim/flightmodel/position/local_x",
                                      "sim/flightmodel/position/local_y",
                                      "sim/flightmodel/position/local_z"])
     
     # calculate relative position to origin (0,0,0)
     # (0,0,0) is the middle point of self.points
     origin_x = sum([point[0] for point in self.points]) / 4
-    origin_y = sum([point[1] for point in self.points]) / 4
-    origin_z = sum([point[2] for point in self.points]) / 4
+    origin_z = sum([point[1] for point in self.points]) / 4
+    origin_y = sum([point[2] for point in self.points]) / 4
     props["position"] = Vector(x[0] - origin_x, y[0] - origin_y, z[0] - origin_z)
     props["speed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
     props["roll"] = self.client.getDREF("sim/flightmodel/position/phi")[0]
@@ -154,7 +155,7 @@ class XPlaneSimulation(Simulation):
     
     if self._isPlane(obj):
       obj.crashed = self.wrapper.getCrashed()
-
+      obj.recoverCounter = self.recoverCounter
     return props
 
   def destroy(self):

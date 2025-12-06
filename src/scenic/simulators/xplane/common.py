@@ -51,6 +51,11 @@ class XPlaneWrapper():
 
   def setAutopilotMode(self, mode):
     self.client.sendDREF("sim/operation/prefs/ai_flies_aircraft", mode)
+    return
+
+  def sendCTRL(self, command):
+    self.client.sendCTRL(command)
+    return
 
   def getCrashed(self):
     crashedInt = int(self.client.getDREF("sim/flightmodel2/misc/has_crashed")[0])
