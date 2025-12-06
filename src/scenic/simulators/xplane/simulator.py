@@ -51,9 +51,9 @@ class XPlaneSimulation(Simulation):
 
     super().__init__(scene, **kwargs)
     return
-
-  def setup(self):
-    """The setup function places the plane on a random location on the runway
+  
+  def scenicLocation(self):
+    """ Generate a random location on the runway based on Scenic scene.
     """
     position = self.scene.egoObject.position
 
@@ -94,13 +94,20 @@ class XPlaneSimulation(Simulation):
     location_random_2D = R @ np.array([position[0], position[1]]) + \
                              np.array([center_x, center_z])
 
+    self.wrapper.setLocation((location_random_2D[0],
+                              position[2],
+                              location_random_2D[1]))
+    
     height = ((position[1]- (-self.scene.params["runway_length"]/2)) / \
              self.scene.params["runway_length"]) * (self.points[0][1]-self.points[3][1]) + self.points[3][1]
 
     location_random_3D = (location_random_2D[0], height, location_random_2D[1])
 
     self.wrapper.setLocation(location_random_3D)
+    return
 
+  def setup(self):
+    self.scenicLocation()
     super().setup()
     return
 
@@ -145,9 +152,13 @@ class XPlaneSimulation(Simulation):
     props["position"] = Vector(x[0] - origin_x, y[0] - origin_y, z[0] - origin_z)
     props["speed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
     props["roll"] = self.client.getDREF("sim/flightmodel/position/phi")[0]
-    props["angularSpeed"] = self.client.getDREF("sim/flightmodel/position/equivalent_airspeed")[0]
     props["pitch"] = self.client.getDREF("sim/flightmodel/position/alpha")[0]
-    props["angularVelocity"] = Vector(vx,vy,vz)
+    P, Q, R = self.client.getDREFs(["sim/flightmodel/position/P",
+                                  "sim/flightmodel/position/Q",
+                                  "sim/flightmodel/position/R"])
+
+    props["angularVelocity"] = Vector(P[0], Q[0], R[0])
+    props["angularSpeed"] = math.sqrt(P[0]**2 + Q[0]**2 + R[0]**2)
     
     if self._isPlane(obj):
       obj.crashed = self.wrapper.getCrashed()
