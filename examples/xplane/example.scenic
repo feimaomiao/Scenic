@@ -76,7 +76,6 @@ record final (ego.startingpoint) as "Starting Point"
 record final (ego.recovery) as "Recovery Time (seconds)"
 record final (ego.height) as "Height to Failure"
 record final (ego.errors) as "Errors"
-record final (ego.eval_errors) as "Eval Errors"
 record final (ego.error_count) as "Error Count"
 
 record final (ego.crashed) as "Final Crashed State"
