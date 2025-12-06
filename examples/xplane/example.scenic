@@ -58,5 +58,6 @@ ego = new BeechcraftBaron58 on Runway,
     with behavior FlyErrorAtHeight(startingpoint, failureheight, errors=conf_errors, recovery=recovery),
 
 record (ego.position) as position
+record (ego.crashed) as crashed
 
 terminate simulation when (ego.crashed == True or ego.recovered == -1)
