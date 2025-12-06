@@ -8,7 +8,7 @@ all: simulator
 
 simulate:
 	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
-	scenic $(SCENIC_FILE) --axes --simulate --verbosity=3 -b
+	scenic $(SCENIC_FILE) --axes --simulate --count=1 --verbosity=3 -b
 	git clean ../.. -f
 
 simulate-finite:
