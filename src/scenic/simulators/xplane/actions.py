@@ -21,6 +21,7 @@ class TeleportAction(Action):
     def applyTo(self, obj, sim):
         """Teleport the aircraft to the target coordinates using X-Plane's wrapper."""
         verbosePrint("Applying TeleportAction to target_coord:", self.target_coord, level=3)
+        obj.target_coord = self.target_coord
         sim.wrapper.setLocation(self.target_coord)
 
 class SetErrorAction(Action):
@@ -58,6 +59,7 @@ class SetRecoverAction(Action):
         """Recover the aircraft from a crashed state."""
         verbosePrint("Starting recover procedure, with recover time:", self.recover_time, level=3)
         sim.recoverCounter = self.recover_time
+        obj.recover_time = self.recover_time
         sim.recovered = True
 
 class SetAutopilotAction(Action):
