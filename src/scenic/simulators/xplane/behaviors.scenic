@@ -91,6 +91,7 @@ behavior FlyErrorAtHeight(startingpoint, height, errors, recovery):
     ego.eval_errors = eval_errors
     ego.error_count = error_count
     ego.recovery = recovery
+    ego.errors = errors
 
     try:
         do FlyRoute(startingpoint)
