@@ -1,4 +1,5 @@
-from scenic.simulators.xplane.common import *
+from scenic.simulators.xplane.common import Workspace, RectangularRegion
+import math
 
 def points_to_workspace(top_left, top_right, bottom_left, bottom_right):
     """
@@ -39,6 +40,5 @@ def points_to_workspace(top_left, top_right, bottom_left, bottom_right):
 
     param runway_length = length
     param runway_width = width
-    print(width, length)
     return Workspace(RectangularRegion((0,0,0), 0, width, length, 'runway'))
 

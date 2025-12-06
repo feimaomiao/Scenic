@@ -1,6 +1,3 @@
-import math
-import time
-import numpy as np
 
 from xpc import XPlaneConnect
 from pathlib import Path
@@ -11,11 +8,9 @@ def write_flight_plan(xplane_install_path: Path, flight_path: str, name: str):
   """ Write the flight plan to the X-Plane FMS directory."""
   fms_path = xplane_install_path / "Output" / "FMS plans"
   fms_path.mkdir(parents=True, exist_ok=True)
-  print("Removing old flight plans...")
   for item in fms_path.iterdir():
       if item.is_file():
           item.unlink()
-  print("Writing new flight plan...")
   with open(fms_path / f"{name}.fms", "w") as f:
       f.write(flight_path)
   pass

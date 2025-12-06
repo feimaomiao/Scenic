@@ -1,24 +1,14 @@
-import argparse
-import logging
 import math
-import os
-import traceback
-import warnings
+import time
 
-import yaml
-from dotmap import DotMap
-
-import scenic.core.errors as errors
-from scenic.core.simulators import Simulation, SimulationCreationError, Simulator
+from scenic.core.simulators import Simulation, Simulator
 from scenic.core.vectors import Vector
-from scenic.core.simulators import SimulationCreationError
-from scenic.syntax.veneer import verbosePrint
 
-from scenic import scenarioFromFile
+import numpy as np
 
 from scenic.simulators.xplane.common import *
+from scenic.syntax.veneer import verbosePrint
 
-from xpc import XPlaneConnect
 
 class XPlaneSimulator(Simulator):
 
@@ -38,6 +28,7 @@ class XPlaneSimulation(Simulation):
   def __init__(self, scene, **kwargs):
     self.agents = []
     self.wrapper = XPlaneWrapper()
+    self.wrapper.client.pauseSim(True)
     self.client = self.wrapper.client
     self.scene = scene
     self.maxSteps = kwargs["maxSteps"]
@@ -50,6 +41,7 @@ class XPlaneSimulation(Simulation):
       time.sleep(1)
 
     super().__init__(scene, **kwargs)
+    self.wrapper.client.pauseSim(False)
     return
   
   def scenicLocation(self):
@@ -107,8 +99,10 @@ class XPlaneSimulation(Simulation):
     return
 
   def setup(self):
+    self.wrapper.client.pauseSim(True)
     self.scenicLocation()
     super().setup()
+    self.wrapper.client.pauseSim(False)
     return
 
   """ Assumption is that all objects are agents, and the agents are airplanes.
@@ -127,6 +121,9 @@ class XPlaneSimulation(Simulation):
     time.sleep(self.timestep)
     if self.recovered:
       self.recoverCounter -= 1
+      if self.recoverCounter <= 0:
+        verbosePrint("Recovering from crash successful")
+        self.wrapper.client.pauseSim(True)
     return
   
   def _isPlane(self, obj):
@@ -140,6 +137,8 @@ class XPlaneSimulation(Simulation):
                                        "sim/flightmodel/position/local_vy",
                                        "sim/flightmodel/position/local_vz"])
     props["velocity"] = Vector(vx, vy, vz)
+
+
     x, z, y = self.client.getDREFs(["sim/flightmodel/position/local_x",
                                      "sim/flightmodel/position/local_y",
                                      "sim/flightmodel/position/local_z"])
