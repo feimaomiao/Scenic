@@ -37,12 +37,12 @@ behavior FlyRoute(startingpoint):
     do setFPMBehavior(430)
     # then the plane is set to fly the route
     take SetAutopilotAction(enabled=True)
-    verbosePrint("Ready for takeoff")
+    verbosePrint("Ready for takeoff", level=3)
     do waitingBehavior(1, indefinite=True)
 
 behavior FailureBehavior(errors, recovery):
     """Behavior that sets an failed state in the simulation, wait for some time, then try to recovers."""
-    verbosePrint("Starting Failure Behavior with errors:", errors)
+    verbosePrint("Starting Failure Behavior with errors:", errors, level=3)
     take SetAutopilotAction(enabled=False)
     for e in errors:
         take SetErrorAction(e)
@@ -53,15 +53,15 @@ behavior FailureBehavior(errors, recovery):
     
     
 behavior FlyWithRandomFailureAfterDistance(startingpoint, distance, errors,error_count, recovery):
-    verbosePrint("Starting Fly with the following parameters:")
-    verbosePrint(f"Starting point: {startingpoint}")
-    verbosePrint(f"Distance to failure: {distance}")
-    verbosePrint(f"Errors: {errors}")
-    verbosePrint(f"Recovery time: {recovery} seconds")
+    verbosePrint("Starting Fly with the following parameters:", level=3)
+    verbosePrint(f"Starting point: {startingpoint}", level=3)
+    verbosePrint(f"Distance to failure: {distance}", level=3)
+    verbosePrint(f"Errors: {errors}", level=3)
+    verbosePrint(f"Recovery time: {recovery} seconds", level=3)
     try:
         do FlyRoute(startingpoint)
     interrupt when distance from ego to (0,0,0) > distance:
-        verbosePrint(f"Simulating errors! {distance from ego to (0,0,0)}")
+        verbosePrint(f"Simulating errors! {distance from ego to (0,0,0)}", level=3)
         do FailureBehavior()
         terminate
 
@@ -71,16 +71,16 @@ behavior FlyErrorAtHeight(startingpoint, height, errors, recovery):
     {i: len(errors)-i + 1 for i in range(1, len(errors)+1)}
     )
     eval_errors = Uniform(*itertools.combinations(errors, error_count))
-    verbosePrint("Starting Fly with the following parameters:")
-    verbosePrint(f"Starting point: {startingpoint}")
-    verbosePrint(f"Height to failure: {height}")
-    verbosePrint(f"Errors: {eval_errors}")
-    verbosePrint(f"Error count: {error_count}")
-    verbosePrint(f"Recovery time: {recovery} seconds")
+    verbosePrint("Starting Fly with the following parameters:", level=3)
+    verbosePrint(f"Starting point: {startingpoint}", level=3)
+    verbosePrint(f"Height to failure: {height}", level=3)
+    verbosePrint(f"Errors: {eval_errors}", level=3)
+    verbosePrint(f"Error count: {error_count}", level=3)
+    verbosePrint(f"Recovery time: {recovery} seconds", level=3)
     try:
         do FlyRoute(startingpoint)
     interrupt when ego.position.z > height:
-        verbosePrint(f"Simulating errors! Current height: {ego.position.z}")
+        verbosePrint(f"Simulating errors! Current height: {ego.position.z}", level=3)
         do FailureBehavior(eval_errors, recovery)
         terminate
     

@@ -127,7 +127,7 @@ class XPlaneSimulation(Simulation):
     if self.recovered:
       self.recoverCounter -= 1
       if self.recoverCounter <= 0:
-        verbosePrint("Recovering from crash successful")
+        verbosePrint("Recovering from crash successful", level=3)
         self.wrapper.client.pauseSim(True)
     return
   
