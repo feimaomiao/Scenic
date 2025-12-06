@@ -167,6 +167,7 @@ class XPlaneSimulation(Simulation):
     if self._isPlane(obj):
       obj.crashed = self.wrapper.getCrashed()
       obj.recoverCounter = self.recoverCounter
+      obj.recovered = self.recovered
 
     return props
 
