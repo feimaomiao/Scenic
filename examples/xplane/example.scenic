@@ -49,10 +49,12 @@ param points = POINTS[:4]
 
 startingpoint = (-237.63894653320312, 337.91754150390625, -33869.328125) # Beginning of runway R15
 
+failureheight = DiscreteRange(150,500)
+
 workspace = points_to_workspace(*POINTS)
 Runway = workspace
 
 ego = new BeechcraftBaron58 on Runway,
-    with behavior FlyErrorAtHeight(startingpoint, 200, errors=conf_errors, recovery=recovery),
+    with behavior FlyErrorAtHeight(startingpoint, failureheight, errors=conf_errors, recovery=recovery),
 
 terminate simulation when (ego.crashed == True or ego.recovered == -1)

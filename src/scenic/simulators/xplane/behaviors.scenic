@@ -1,6 +1,7 @@
 import math
 import itertools 
 
+from scenic.syntax.veneer import verbosePrint
 try:
     from scenic.simulators.xplane.actions import *
 except ModuleNotFoundError:
@@ -12,7 +13,6 @@ behavior waitingBehavior(count = 0, indefinite = False):
         wait
         if not indefinite:
             count -= 1
-        print(f"Plane location: {ego.position.x}, {ego.position.y}, {ego.position.z}")
 
 behavior setFPMBehavior(board_code):
     if board_code != 430:
@@ -37,10 +37,12 @@ behavior FlyRoute(startingpoint):
     do setFPMBehavior(430)
     # then the plane is set to fly the route
     take SetAutopilotAction(enabled=True)
+    verbosePrint("Ready for takeoff")
     do waitingBehavior(1, indefinite=True)
 
 behavior FailureBehavior(errors, recovery):
     """Behavior that sets an failed state in the simulation, wait for some time, then try to recovers."""
+    verbosePrint("Starting Failure Behavior with errors:", errors)
     take SetAutopilotAction(enabled=False)
     for e in errors:
         take SetErrorAction(e)
@@ -51,15 +53,15 @@ behavior FailureBehavior(errors, recovery):
     
     
 behavior FlyWithRandomFailureAfterDistance(startingpoint, distance, errors,error_count, recovery):
-    print("Starting Fly with the following parameters:")
-    print(f"Starting point: {startingpoint}")
-    print(f"Distance to failure: {distance}")
-    print(f"Errors: {errors}")
-    print(f"Recovery time: {recovery} seconds")
+    verbosePrint("Starting Fly with the following parameters:")
+    verbosePrint(f"Starting point: {startingpoint}")
+    verbosePrint(f"Distance to failure: {distance}")
+    verbosePrint(f"Errors: {errors}")
+    verbosePrint(f"Recovery time: {recovery} seconds")
     try:
         do FlyRoute(startingpoint)
     interrupt when distance from ego to (0,0,0) > distance:
-        print(f"Simulating errors! {distance from ego to (0,0,0)}")
+        verbosePrint(f"Simulating errors! {distance from ego to (0,0,0)}")
         do FailureBehavior()
         terminate
 
@@ -69,16 +71,16 @@ behavior FlyErrorAtHeight(startingpoint, height, errors, recovery):
     {i: len(errors)-i + 1 for i in range(1, len(errors)+1)}
     )
     eval_errors = Uniform(*itertools.combinations(errors, error_count))
-    print("Starting Fly with the following parameters:")
-    print(f"Starting point: {startingpoint}")
-    print(f"Height to failure: {height}")
-    print(f"Errors: {eval_errors}")
-    print(f"Error count: {error_count}")
-    print(f"Recovery time: {recovery} seconds")
+    verbosePrint("Starting Fly with the following parameters:")
+    verbosePrint(f"Starting point: {startingpoint}")
+    verbosePrint(f"Height to failure: {height}")
+    verbosePrint(f"Errors: {eval_errors}")
+    verbosePrint(f"Error count: {error_count}")
+    verbosePrint(f"Recovery time: {recovery} seconds")
     try:
         do FlyRoute(startingpoint)
     interrupt when ego.position.z > height:
-        print(f"Simulating errors! Current height: {ego.position.y}")
+        verbosePrint(f"Simulating errors! Current height: {ego.position.z}")
         do FailureBehavior(eval_errors, recovery)
         terminate
     
