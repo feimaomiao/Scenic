@@ -1,4 +1,3 @@
-from scenic.simulators.xplane.common import Workspace, RectangularRegion
 import math
 
 def points_to_workspace(top_left, top_right, bottom_left, bottom_right):
