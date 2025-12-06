@@ -43,6 +43,8 @@ class XPlaneSimulation(Simulation):
     self.maxSteps = kwargs["maxSteps"]
     self.timestep = kwargs["timestep"]
     self.points = scene.params.get("points")
+    while self.wrapper.getCrashed():
+      time.sleep(1)
 
     super().__init__(scene, **kwargs)
     return

@@ -53,9 +53,6 @@ startingpoint = (-237.63894653320312, 337.91754150390625, -33869.328125) # Begin
 workspace = points_to_workspace(*POINTS)
 Runway = workspace
 
-
-
-
 ego = new BeechcraftBaron58 on Runway,
     with behavior FlyRoute(startingpoint)
 

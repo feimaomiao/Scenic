@@ -26,7 +26,7 @@ class XPlaneWrapper():
   COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
   def __init__(self):
-    self.client = XPlaneConnect(timeout=10000)
+    self.client = XPlaneConnect(timeout=100000000)
     return
 
 

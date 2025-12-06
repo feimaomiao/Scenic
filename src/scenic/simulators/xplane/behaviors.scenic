@@ -3,14 +3,15 @@ try:
 except ModuleNotFoundError:
     pass    # ignore; error will be caught later if user attempts to run a simulation
 
-behavior TeleportBehavior(targetPosition):
-    """Behavior that teleports the ego to a specified position."""
-    take TeleportAction(targetPosition)
+# behavior TeleportBehavior(targetPosition):
+#     """Behavior that teleports the ego to a specified position."""
+#     take TeleportAction(targetPosition)
 
-behavior waitingBehavior():
+behavior waitingBehavior(count = 0):
     """Behavior that waits indefinitely."""
-    while True:
+    while count > 0:
         wait
+        count -= 1
 
 behavior setFPMBehavior(board_code):
     if board_code != 430:
@@ -27,9 +28,11 @@ behavior setFPMBehavior(board_code):
 
 
 behavior FlyRoute(startingpoint):
+    do waitingBehavior(3)
     # first the plane is teleported to the starting point
+    take SendCOMMAction("sim/operation/reset_flight")
     take SetAutopilotAction(enabled=False)
-    take TeleportAction(startingpoint)
+    # take TeleportAction(startingpoint)
     do setFPMBehavior(430)
     # then the plane is set to fly the route
     take SetAutopilotAction(enabled=True)
