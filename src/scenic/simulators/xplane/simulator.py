@@ -96,6 +96,10 @@ class XPlaneSimulation(Simulation):
 
     self.wrapper.setLocation(location_random_3D)
 
+    # self.wrapper.setWeather(1.0)
+    self.wrapper.setWeatherChange(0)
+    # self.wrapper.setCloudType(3)
+
     super().setup()
     return
 

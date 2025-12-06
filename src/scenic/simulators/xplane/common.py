@@ -58,3 +58,21 @@ class XPlaneWrapper():
 
     print(f"Plane Crashed: {crashed}")
     return crashed
+  
+  def setRain(self, rainpercent):
+    '''[0.0 - 1.0] The percentage of rain falling.'''
+    self.client.sendDREF("sim/weather/region/rain_percent", rainpercent)
+    return
+  
+  def setWeatherChange(self, change_mode):
+    '''How the weather is changing. 0 = Rapidly Improving, 1 = Improving, 2 = Gradually Improving, 
+    3 = Static, 4 = Gradually Deteriorating, 5 = Deteriorating, 6 = Rapidly Deteriorating, 7 = Using Real Weather'''
+
+    self.client.sendDREF("sim/weather/region/change_mode", change_mode)
+    return
+  
+  def setCloudType(self, cloud_type):
+    '''Blended cloud types per layer. 0 = Cirrus, 1 = Stratus, 2 = Cumulus, 
+    3 = Cumulo-nimbus. Intermediate values are to be expected.'''
+    self.client.sendDREF("sim/weather/region/cloud_type", cloud_type)
+    return
