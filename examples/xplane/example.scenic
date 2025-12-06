@@ -66,7 +66,7 @@ record (ego.roll) as roll
 record (ego.pitch) as pitch
 record (ego.yaw) as yaw
 
-record final (ego.crashed) as crashed
-record final (ego.recovered) as recovered
+record final (ego.crashed) as "Final Crashed State"
+record final (ego.recovered) as "Final Recovered State"
 
 terminate simulation when (ego.crashed == True or ego.recovered == -1)
