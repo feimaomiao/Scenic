@@ -1,8 +1,8 @@
-
 from xpc import XPlaneConnect
 from pathlib import Path
 
 TIMEOUT = 1000000000
+DEBUG = False
 
 def write_flight_plan(xplane_install_path: Path, flight_path: str, name: str):
   """ Write the flight plan to the X-Plane FMS directory."""
@@ -56,7 +56,8 @@ class XPlaneWrapper():
     crashedInt = int(self.client.getDREF("sim/flightmodel2/misc/has_crashed")[0])
     crashed = crashedInt != 0
 
-    print(f"Plane Crashed: {crashed}")
+    if DEBUG:
+      print(f"Plane Crashed: {crashed}")
     return crashed
   
   def setRain(self, rainpercent):
