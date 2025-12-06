@@ -58,6 +58,13 @@ ego = new BeechcraftBaron58 on Runway,
     with behavior FlyErrorAtHeight(startingpoint, failureheight, errors=conf_errors, recovery=recovery),
 
 record (ego.position) as position
+record (ego.velocity) as velocity
+record (ego.speed) as speed
+record (ego.angularVelocity) as angularVelocity
+record (ego.angularSpeed) as angularSpeed
+record (ego.roll) as roll
+record (ego.pitch) as pitch
+record (ego.yaw) as yaw
 
 record final (ego.crashed) as crashed
 record final (ego.recovered) as recovered
