@@ -1,5 +1,5 @@
 {
-    "xplane-install" : "/Volumes/CopeDrive/X-Plane 12/",
+    "xplane-install" : "~/X-Plane 12/",
     "points": [
     [850, 350.7986755371094, -31372],                            
     [808.9561157226562, 351.1387634277344, -31355.494140625],    
