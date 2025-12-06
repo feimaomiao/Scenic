@@ -8,6 +8,11 @@ all: simulator
 
 simulate:
 	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
+	scenic $(SCENIC_FILE) --axes --show-records --simulate --count=1 -b
+	git clean ../.. -f
+
+simulate_verbose:
+	ln -s -f $(CONFIG_FILE) $(FP1_FILE) .
 	scenic $(SCENIC_FILE) --axes --simulate --count=1 --verbosity=3 -b
 	git clean ../.. -f
 
