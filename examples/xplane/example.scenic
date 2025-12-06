@@ -66,6 +66,17 @@ record (ego.roll) as roll
 record (ego.pitch) as pitch
 record (ego.yaw) as yaw
 
+record (ego.distance) as "Distance to Failure"
+record (ego.recoverCounter) as "Recovery Counter"
+
+# These valuesdoesn't get recorded until the beginning or middle steps of the simulation.
+# Thus, getting the initial value using `record initial` will return the uninitialized values of
+# (0, 0, 0) or 0.
+#
+record final (ego.startingpoint) as "Starting Point"
+record final (ego.recovery) as "Recovery Time (seconds)"
+record final (ego.height) as "Height to Failure"
+
 record final (ego.crashed) as "Final Crashed State"
 record final (ego.recovered) as "Final Recovered State"
 

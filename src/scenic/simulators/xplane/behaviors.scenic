@@ -43,6 +43,8 @@ behavior FlyRoute(startingpoint):
 behavior FailureBehavior(errors, recovery):
     """Behavior that sets an failed state in the simulation, wait for some time, then try to recovers."""
     verbosePrint("Starting Failure Behavior with errors:", errors, level=3)
+    ego.errors = errors
+
     take SetAutopilotAction(enabled=False)
     for e in errors:
         take SetErrorAction(e)
@@ -58,6 +60,12 @@ behavior FlyWithRandomFailureAfterDistance(startingpoint, distance, errors,error
     verbosePrint(f"Distance to failure: {distance}", level=3)
     verbosePrint(f"Errors: {errors}", level=3)
     verbosePrint(f"Recovery time: {recovery} seconds", level=3)
+
+    ego.startingpoint = startingpoint
+    ego.distance = distance
+    ego.errors = errors
+    ego.recovery = recovery
+
     try:
         do FlyRoute(startingpoint)
     interrupt when distance from ego to (0,0,0) > distance:
@@ -77,6 +85,13 @@ behavior FlyErrorAtHeight(startingpoint, height, errors, recovery):
     verbosePrint(f"Errors: {eval_errors}", level=3)
     verbosePrint(f"Error count: {error_count}", level=3)
     verbosePrint(f"Recovery time: {recovery} seconds", level=3)
+
+    ego.startingpoint = startingpoint
+    ego.height = height
+    ego.eval_errors = eval_errors
+    ego.error_count = error_count
+    ego.recovery = recovery
+
     try:
         do FlyRoute(startingpoint)
     interrupt when ego.position.z > height:
