@@ -38,14 +38,6 @@ merge:
 	git pull
 	git merge simeon
 	git push
-	git checkout chen
-	git pull
-	git merge main
-	git push
-	git checkout xplane-simulator
-	git pull
-	git merge main
-	git push
 	git checkout simeon
 	git pull
 
