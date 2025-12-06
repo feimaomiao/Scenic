@@ -58,3 +58,5 @@ Runway = workspace
 
 ego = new BeechcraftBaron58 on Runway,
     with behavior FlyRoute(startingpoint)
+
+terminate simulation when (ego.crashed == True)
