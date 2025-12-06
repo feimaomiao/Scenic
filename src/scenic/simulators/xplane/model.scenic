@@ -11,5 +11,6 @@ class Plane():
   startingpoint: (0, 0, 0)
   distance: 0
   recovery: 0
-  recover_time : 0
-  target_coord : (0, 0, 0)
+  error_count : 0
+  eval_errors : ""
+  errors : ""
