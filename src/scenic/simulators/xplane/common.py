@@ -5,12 +5,13 @@ import numpy as np
 from xpc import XPlaneConnect
 from pathlib import Path
 
+TIMEOUT = 1000000000
 
 def write_flight_plan(xplane_install_path: Path, flight_path: str, name: str):
   """ Write the flight plan to the X-Plane FMS directory."""
   fms_path = xplane_install_path / "Output" / "FMS plans"
   fms_path.mkdir(parents=True, exist_ok=True)
-  print("Removeing old flight plans...")
+  print("Removing old flight plans...")
   for item in fms_path.iterdir():
       if item.is_file():
           item.unlink()
@@ -26,7 +27,7 @@ class XPlaneWrapper():
   COORDS_DREFS = [X_DREF, Y_DREF, Z_DREF]
 
   def __init__(self):
-    self.client = XPlaneConnect(timeout=100000000)
+    self.client = XPlaneConnect(timeout=TIMEOUT)
     return
 
 
