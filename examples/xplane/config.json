@@ -1,10 +1,25 @@
 {
-    "xplane-install" : "~/X-Plane 12/",
+    "xplane-install" : "/Volumes/CopeDrive/X-Plane 12/",
     "points": [
     [850, 350.7986755371094, -31372],                            
     [808.9561157226562, 351.1387634277344, -31355.494140625],    
     [-225.74005126953125, 337.68798828125, -33897.8203125],      
     [-266.25006103515625, 337.9598083496094, -33882.296875]
     ],
-    "fpl_name": "LOIS_LOIK"
+    "fpl_name": "LOIS_LOIK",
+    "possible_errors": [
+        "sim/operation/failures/rel_apu_fire",
+        "sim/operation/failures/rel_engfir0",
+        "sim/operation/failures/rel_engfir1",
+        "sim/operation/failures/rel_engsep0",
+        "sim/operation/failures/rel_engsep1",
+        "sim/operation/failures/rel_fadec_0",
+        "sim/operation/failures/rel_fadec_1",
+        "sim/operation/failures/rel_engfai0",
+        "sim/operation/failures/rel_engfai1",
+        "sim/operation/failures/rel_bird_strike_eng1",
+        "sim/operation/failures/rel_brown_out",
+        "sim/operation/failures/rel_bleed_air_rgt",
+        "sim/operation/failures/rel_bleed_air_lft"
+    ]
 }

@@ -7,3 +7,4 @@ simulator XPlaneSimulator()
 
 class Plane():
   crashed: False
+  recoverCounter: 30

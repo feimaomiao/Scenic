@@ -1,17 +1,13 @@
 # Load X-Plane world model
-from scenic.simulators.xplane.world import *
-
-from scenic.simulators.xplane.model import *
+import itertools
+import json
+from pathlib import Path
+import shutil
 
 from scenic.simulators.xplane.behaviors import *
-
 from scenic.simulators.xplane.common import write_flight_plan
-
-from pathlib import Path
-
-import json
-
-import shutil
+from scenic.simulators.xplane.model import *
+from scenic.simulators.xplane.world import *
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -33,6 +29,9 @@ xplane_install_path = Path(config["xplane-install"])
 
 write_flight_plan(xplane_install_path, flight_plan_string, config["fpl_name"])
 
+conf_errors = config.get("possible_errors")
+
+recovery = DiscreteRange(10, 30)
 
 """
    In its current state, the model only supports the Beechcraft Baron 58 airplane
@@ -54,6 +53,6 @@ workspace = points_to_workspace(*POINTS)
 Runway = workspace
 
 ego = new BeechcraftBaron58 on Runway,
-    with behavior FlyRoute(startingpoint)
+    with behavior FlyErrorAtHeight(startingpoint, 200, errors=conf_errors, recovery=recovery),
 
-terminate simulation when (ego.crashed == True)
+terminate simulation when (ego.crashed == True or ego.recovered == -1)
